@@ -1,0 +1,23 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    
+    <!-- 這邊主要定義介面統一的規格 -->
+    <!-- 主字體顏色 -->
+    <Brush x:Key="White">#FFF6F6F6</Brush>
+    <Brush x:Key="White2">#FFC8C8C8</Brush>
+    <Brush x:Key="Gray">#FF828282</Brush>
+    <Brush x:Key="Green">#FF02B002</Brush>
+    <Brush x:Key="Red">#FFE10000</Brush>
+
+    <!-- 底色 -->
+    <Brush x:Key="OuterFrame">#666F7A</Brush>
+
+    <Brush x:Key="Panel_1">#6F7985</Brush>
+    <Brush x:Key="Panel_2">#444D52</Brush>
+    <Brush x:Key="Panel_3">#484D52</Brush>
+
+    <!-- 通用 -->
+
+    
+</ResourceDictionary>
