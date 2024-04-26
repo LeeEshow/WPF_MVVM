@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using WPF.Properties;
+using Component;
 
 namespace WPF
 {
@@ -24,13 +25,13 @@ namespace WPF
         public Connection_Setting()
         {
             InitializeComponent();
-            gri_DB.DataContext = VM.DB_Status;
+            gri_DB.DataContext = Globals.DBConfig;
         }
 
         // 連線測試
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            VM.DB_Status.TestConnect();
+            Globals.DBConfig.TestConnect();
         }
         delegate void TextCallBack(object sender, string Text);
         void syncText(object sender, string Text)

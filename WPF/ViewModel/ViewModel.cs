@@ -1,8 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Drawing;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using WPF.ViewModel;
+using System.Windows;
 
 namespace WPF
 {
@@ -17,6 +18,22 @@ namespace WPF
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+
+        // Test 取得 XAML 資源參數
+        private static readonly ResourceDictionary genericResourceDictionary;
+        static ViewModelBase()
+        {
+            var uri = new Uri("/View/Style/Common.xaml", UriKind.Relative);
+            genericResourceDictionary = (ResourceDictionary)Application.LoadComponent(uri);
+        }
+
+        public string GetValue(string Key)
+        {
+            return genericResourceDictionary[Key].ToString();
+        }
+
+
     }
 
 
@@ -29,67 +46,6 @@ namespace WPF
     public static class VM
     {
         // ViewModel 方式傳遞 
-        #region ViewModel
-        /// <summary>
-        /// 管理處理程序
-        /// </summary>
-        public static Manager Manager = new Manager();
 
-        /// <summary>
-        /// 資料庫連線狀態
-        /// </summary>
-        public static DB_Status DB_Status = new DB_Status();
-
-        /// <summary>
-        /// 異常通報
-        /// </summary>
-        public static Error Error = new Error();
-        #endregion ViewModel
-
-
-        // 無法用 ViewModel 方式改用事件(event)傳遞
-        #region Event
-
-        #region Show Message
-        /// <summary>
-        /// 委派事件
-        /// </summary>
-        /// <param name="ex">例外內容</param>
-        public delegate void MessageShow(string Message);
-        /// <summary>
-        /// MessageShow
-        /// </summary>
-        public static event MessageShow ShowEvent;
-        /// <summary>
-        /// Show
-        /// </summary>
-        /// <param name="ex"></param>
-        public static void Show(string Message)
-        {
-            ShowEvent?.Invoke(Message);
-        }
-        #endregion Show Message
-
-        #region Method Exception
-        /// <summary>
-        /// 委派事件
-        /// </summary>
-        /// <param name="ex">例外內容</param>
-        public delegate void MethodException(MethodBase method, Exception ex);
-        /// <summary>
-        /// 例外事件。
-        /// </summary>
-        public static event MethodException AppException;
-        /// <summary>
-        /// 開專案中發生例外狀況必須觸發該事件。
-        /// </summary>
-        /// <param name="ex"></param>
-        public static void TriggerExceptionEvent(MethodBase method, Exception ex)
-        {
-            AppException?.Invoke(method, ex);
-        }
-        #endregion Method Exception
-
-        #endregion Event
     }
 }

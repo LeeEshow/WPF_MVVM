@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="clr-namespace:WPF"
+    xmlns:Component="clr-namespace:Component.View.Controller;assembly=Component"
     x:Class="WPF.MainWindow"
     mc:Ignorable="d"
     Title="MVVM" Height="600" Width="500" BorderThickness="0" 
@@ -23,8 +24,7 @@
     <!--#region 視窗框 右邊內容 -->
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
-            <TextBlock x:Name="tb_Version" Foreground="#FFAAAAAA" VerticalAlignment="Center"
-                       Margin="0,0,5,0"/>
+            <Component:btn_Login />
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
     <!--#endregion-->
@@ -47,7 +47,7 @@
             </Grid>
             <GridSplitter Grid.Row="1" Height="3" HorizontalAlignment="Stretch" Background="{DynamicResource Panel_1}"/>
             <Grid Grid.Row="0">
-                <local:MessageShow DockPanel.Dock="Top" Margin="3,3,3,0"/>
+                <Component:pan_Message DockPanel.Dock="Top" Margin="3,3,3,0"/>
             </Grid>
         </Grid>
 

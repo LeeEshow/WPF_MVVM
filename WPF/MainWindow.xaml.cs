@@ -6,12 +6,13 @@ using WPF.Properties;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Threading;
-using WPF.ViewModel;
 using System.Collections.Generic;
 using System.Reflection;
 using API;
 using ToolBox.ExtensionMethods;
 using TestCode;
+using Component;
+using System.Linq;
 
 namespace WPF
 {
@@ -30,11 +31,11 @@ namespace WPF
             #region 版本號
             try
             {
-                tb_Version.Text = "v" + ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
+                this.Title += " - v" + ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
             }
             catch
             {
-                tb_Version.Text = "開發環境";
+                this.Title += " 開發環境";
             }
             #endregion 版本號
 
@@ -57,7 +58,7 @@ namespace WPF
             }
             catch (Exception ex)
             {
-                VM.TriggerExceptionEvent(MethodBase.GetCurrentMethod(), ex);
+                Globals.ExceptionEvent(MethodBase.GetCurrentMethod(), ex);
             }
         }
         #endregion 事件宣告
@@ -82,7 +83,7 @@ namespace WPF
             }
             catch (Exception ex)
             {
-                VM.TriggerExceptionEvent(MethodBase.GetCurrentMethod(), ex);
+                Globals.ExceptionEvent(MethodBase.GetCurrentMethod(), ex);
                 this.Close();
             }
         }
@@ -97,7 +98,7 @@ namespace WPF
             }
             catch (Exception ex)
             {
-                VM.TriggerExceptionEvent(MethodBase.GetCurrentMethod(), ex);
+                Globals.ExceptionEvent(MethodBase.GetCurrentMethod(), ex);
                 this.Close();
             }
         }
@@ -110,12 +111,12 @@ namespace WPF
             try
             {
                 // DB 連線測試
-                VM.DB_Status.TestConnect();
+                Globals.DBConfig.TestConnect();
 
             }
             catch (Exception ex)
             {
-                VM.TriggerExceptionEvent(MethodBase.GetCurrentMethod(), ex);
+                Globals.ExceptionEvent(MethodBase.GetCurrentMethod(), ex);
             }
         }
         #endregion Windows 事件
@@ -144,7 +145,7 @@ namespace WPF
 
             var TF = new Customer_Code().BulkInsert(List);
 
-            VM.Show(TF.ToString());
+            Globals.ShowEvent(TF.ToString());
         }
 
 

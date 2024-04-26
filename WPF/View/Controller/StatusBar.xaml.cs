@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WPF.Properties;
+using Component;
 
 namespace WPF
 {
@@ -24,8 +25,7 @@ namespace WPF
         public StatusBar()
         {
             InitializeComponent();
-            gri_DB.DataContext = VM.DB_Status;
-            gri_Tasks.DataContext = VM.Manager;
+            gri_Tasks.DataContext = Globals.Manager;
         }
     }
 }
