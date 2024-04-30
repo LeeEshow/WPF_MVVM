@@ -13,6 +13,7 @@ using ToolBox.ExtensionMethods;
 using TestCode;
 using Component;
 using System.Linq;
+using static Component.ViewModel.Mission;
 
 namespace WPF
 {
@@ -35,12 +36,15 @@ namespace WPF
             }
             catch
             {
-                this.Title += " 開發環境";
+                this.Title += " - 開發版";
             }
             #endregion 版本號
 
             // 事件宣告
             Settings.Default.PropertyChanged += Default_PropertyChanged;
+            // 把所有例外事件傳遞給 MVVM 統一介面
+            Server.ServerException += MVVM.ExceptionEvent;
+            API.Base.APIException += MVVM.ExceptionEvent;
         }
 
         #region 事件宣告
@@ -58,7 +62,7 @@ namespace WPF
             }
             catch (Exception ex)
             {
-                Globals.ExceptionEvent(MethodBase.GetCurrentMethod(), ex);
+                MVVM.ExceptionEvent(MethodBase.GetCurrentMethod(), ex);
             }
         }
         #endregion 事件宣告
@@ -83,7 +87,7 @@ namespace WPF
             }
             catch (Exception ex)
             {
-                Globals.ExceptionEvent(MethodBase.GetCurrentMethod(), ex);
+                MVVM.ExceptionEvent(MethodBase.GetCurrentMethod(), ex);
                 this.Close();
             }
         }
@@ -98,7 +102,7 @@ namespace WPF
             }
             catch (Exception ex)
             {
-                Globals.ExceptionEvent(MethodBase.GetCurrentMethod(), ex);
+                MVVM.ExceptionEvent(MethodBase.GetCurrentMethod(), ex);
                 this.Close();
             }
         }
@@ -111,12 +115,11 @@ namespace WPF
             try
             {
                 // DB 連線測試
-                Globals.DBConfig.TestConnect();
-
+                MVVM.Initialize();
             }
             catch (Exception ex)
             {
-                Globals.ExceptionEvent(MethodBase.GetCurrentMethod(), ex);
+                MVVM.ExceptionEvent(MethodBase.GetCurrentMethod(), ex);
             }
         }
         #endregion Windows 事件
@@ -126,26 +129,7 @@ namespace WPF
         // Test
         private void btn_test1_Click(object sender, RoutedEventArgs e)
         {
-            List<Customer_Code> List = new List<Customer_Code>();
-
-            for (int x = 2000; x < 2999; x++)
-            {
-                List.Add(new Customer_Code
-                {
-                    Case = "NAL",
-                    Customer = "Test",
-                    Remark = "2024-04-24 Test 2",
-                    Codes = new List<Serial_Code>
-                    {
-                        new Serial_Code { Key = "Unique Reference Number", Value = "A0425" + x.ToString("X").PadLeft(5, '0') },
-                        new Serial_Code { Key = "15-Digit Digital Code", Value = "B0425" + x.ToString("X").PadLeft(5, '0') }
-                    }
-                });
-            }
-
-            var TF = new Customer_Code().BulkInsert(List);
-
-            Globals.ShowEvent(TF.ToString());
+            MVVM.Manager.Tasks.Add(new MoveFile());
         }
 
 
@@ -156,6 +140,7 @@ namespace WPF
         {
 
         }
+
 
 
     }

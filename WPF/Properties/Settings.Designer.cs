@@ -26,48 +26,24 @@ namespace WPF.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string DB_IP {
+        public string MoveFile_Path {
             get {
-                return ((string)(this["DB_IP"]));
+                return ((string)(this["MoveFile_Path"]));
             }
             set {
-                this["DB_IP"] = value;
+                this["MoveFile_Path"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string DB_ID {
+        public string MoveFile_ToPath {
             get {
-                return ((string)(this["DB_ID"]));
+                return ((string)(this["MoveFile_ToPath"]));
             }
             set {
-                this["DB_ID"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string DB_Password {
-            get {
-                return ((string)(this["DB_Password"]));
-            }
-            set {
-                this["DB_Password"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Schema {
-            get {
-                return ((string)(this["Schema"]));
-            }
-            set {
-                this["Schema"] = value;
+                this["MoveFile_ToPath"] = value;
             }
         }
     }

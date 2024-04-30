@@ -4,28 +4,15 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:Component="clr-namespace:Component.View.Controller;assembly=Component"      
-    xmlns:local="clr-namespace:WPF"
+    xmlns:local="clr-namespace:WPF" xmlns:viewmodel="clr-namespace:Component.ViewModel;assembly=Component"
     x:Class="WPF.StatusBar"
     mc:Ignorable="d" 
     d:DesignHeight="30" d:DesignWidth="500">
 
     <DockPanel>
-        <StatusBar DockPanel.Dock="Left" Background="{x:Null}">
-            <Component:sbi_DBConfig />
-            <Separator Grid.Column="2" Margin="0, 3" Background="{StaticResource Gray}"/>
-
-            <!--#region Tasks -->
-            <StatusBarItem HorizontalAlignment="Right" Margin="0,0,10,0">
-                <DockPanel x:Name="gri_Tasks">
-                    <TextBlock Text="Tasks：" Foreground="{StaticResource White2}" Margin="10, 0, 0, 0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    <TextBlock Text="{Binding Tasks_Count}" Foreground="{StaticResource White2}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                </DockPanel>
-            </StatusBarItem>
-            <!--#endregion-->
-            
-        </StatusBar>
-       
-       
-        
+        <Component:sbi_DBConfig DockPanel.Dock="Left" Margin="5,0" />
+        <Grid DockPanel.Dock="Left" Margin="0,3" Width="2" Background="{StaticResource Gray}"/>
+        <Component:sbi_Error DockPanel.Dock="Right" Margin="5,0" MinWidth="60"/>
+        <Grid />
     </DockPanel>
 </UserControl>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MahApps.Metro.Controls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,19 +11,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using WPF.Properties;
-using Component;
 
 namespace WPF
 {
     /// <summary>
-    /// StatusBar.xaml 的互動邏輯
+    /// Mission_Manager.xaml 的互動邏輯
     /// </summary>
-    public partial class StatusBar : UserControl
+    public partial class Mission_Manager : MetroWindow
     {
-        public StatusBar()
+        public Mission_Manager()
         {
             InitializeComponent();
         }

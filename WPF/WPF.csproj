@@ -38,9 +38,8 @@
     <ApplicationIcon>Resources\logo.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="API, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\API\API\bin\Debug\API.dll</HintPath>
+    <Reference Include="API">
+      <HintPath>..\..\API\API\bin\Debug\API.dll</HintPath>
     </Reference>
     <Reference Include="Component, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -77,7 +76,7 @@
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="ToolBox">
-      <HintPath>..\..\..\Tool\ToolBox\bin\Debug\ToolBox.dll</HintPath>
+      <HintPath>..\..\Tool\ToolBox\bin\Debug\ToolBox.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
@@ -88,6 +87,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="MoveFile.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -104,6 +104,12 @@
     </Compile>
     <Compile Include="View\Window\Connection_Setting.xaml.cs">
       <DependentUpon>Connection_Setting.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Window\FTP.xaml.cs">
+      <DependentUpon>FTP.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Window\Mission_Manager.xaml.cs">
+      <DependentUpon>Mission_Manager.xaml</DependentUpon>
     </Compile>
     <Page Include="View\Controller\StatusBar.xaml">
       <SubType>Designer</SubType>
@@ -126,6 +132,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Window\Connection_Setting.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Window\FTP.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Window\Mission_Manager.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

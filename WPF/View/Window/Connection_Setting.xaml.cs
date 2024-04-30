@@ -25,13 +25,13 @@ namespace WPF
         public Connection_Setting()
         {
             InitializeComponent();
-            gri_DB.DataContext = Globals.DBConfig;
+            gri_DB.DataContext = MVVM.DBConfig;
         }
 
         // 連線測試
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Globals.DBConfig.TestConnect();
+            MVVM.DBConfig.TestConnect();
         }
         delegate void TextCallBack(object sender, string Text);
         void syncText(object sender, string Text)

@@ -20,20 +20,6 @@ namespace WPF
         }
 
 
-        // Test 取得 XAML 資源參數
-        private static readonly ResourceDictionary genericResourceDictionary;
-        static ViewModelBase()
-        {
-            var uri = new Uri("/View/Style/Common.xaml", UriKind.Relative);
-            genericResourceDictionary = (ResourceDictionary)Application.LoadComponent(uri);
-        }
-
-        public string GetValue(string Key)
-        {
-            return genericResourceDictionary[Key].ToString();
-        }
-
-
     }
 
 

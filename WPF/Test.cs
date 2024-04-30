@@ -246,4 +246,28 @@ namespace TestCode
     }
 
 
+
+
+    public class A
+    {
+        // 想透過一個統一的方法額外處理下面兩個method return值
+        // 例如 f(x) => return value / 100 + "%"
+        // 當外部程序call A.TestA(5) >>> retuen 10%
+        // call A.TestB(5) >> retuen 25%
+
+        // 不能變更 TestA/TestB 內部的code為前提
+
+        public int TestA(int value)
+        {
+            return value * 2;
+        }
+
+        public int TestB(int value)
+        {
+            return value * value;
+        }
+
+    }
+
+
 }
