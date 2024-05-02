@@ -3,7 +3,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"            
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"            
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"            
-    xmlns:Component="clr-namespace:Component.View.Controller;assembly=Component"           
+    xmlns:Component="clr-namespace:Component.View.Controller;assembly=Component"
+    xmlns:WPF="clr-namespace:WPF"
     xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" 
     x:Class="WPF.Menu"   
     mc:Ignorable="d"     
@@ -38,8 +39,9 @@
         <!--#endregion-->
 
         <!-- 右側功能列 -->
-        <Component:tb_Mission DockPanel.Dock="Right"/>
-        
+        <ToolBarPanel DockPanel.Dock="Right" >
+            <WPF:tb_Mission />
+        </ToolBarPanel>
         <Grid/>
     </DockPanel>
 </UserControl>

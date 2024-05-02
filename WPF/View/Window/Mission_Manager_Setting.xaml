@@ -1,0 +1,36 @@
+﻿<Controls:MetroWindow 
+    x:Class="WPF.Mission_Manager_Setting"
+    xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="編輯設定值" Height="300" Width="400" Loaded="MetroWindow_Loaded"
+    WindowTitleBrush="{StaticResource OuterFrame}" BorderThickness="0" 
+    Background="{DynamicResource Panel_1}">
+    
+    <Grid ScrollViewer.VerticalScrollBarVisibility="Visible">
+        <DataGrid x:Name="dg_Data" Style="{StaticResource MainDataGrid}" AutoGenerateColumns="False" CanUserAddRows="False"
+                  SelectedItem="{Binding Item, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn  Header="Key">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Key}" VerticalAlignment="Center" Margin="5,0"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn  Header="Value">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding Value}" ToolTip="{Binding Name}" IsEnabled="{Binding CanEdit}"
+                                     TextChanged="TextBox_TextChanged" Style="{StaticResource defTextBox}" 
+                                     VerticalAlignment="Center" Margin="5,0" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Controls:MetroWindow>

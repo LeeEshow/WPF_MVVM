@@ -26,24 +26,12 @@ namespace WPF.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string MoveFile_Path {
+        public string 設定 {
             get {
-                return ((string)(this["MoveFile_Path"]));
+                return ((string)(this["設定"]));
             }
             set {
-                this["MoveFile_Path"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string MoveFile_ToPath {
-            get {
-                return ((string)(this["MoveFile_ToPath"]));
-            }
-            set {
-                this["MoveFile_ToPath"] = value;
+                this["設定"] = value;
             }
         }
     }

@@ -87,7 +87,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="MoveFile.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -95,12 +94,16 @@
     </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="Test.cs" />
+    <Compile Include="ViewModel\Mission.cs" />
     <Compile Include="ViewModel\ViewModel.cs" />
     <Compile Include="View\Controller\Menu.xaml.cs">
       <DependentUpon>Menu.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Controller\StatusBar.xaml.cs">
       <DependentUpon>StatusBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controller\tb_Mission.xaml.cs">
+      <DependentUpon>tb_Mission.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Window\Connection_Setting.xaml.cs">
       <DependentUpon>Connection_Setting.xaml</DependentUpon>
@@ -110,6 +113,9 @@
     </Compile>
     <Compile Include="View\Window\Mission_Manager.xaml.cs">
       <DependentUpon>Mission_Manager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Window\Mission_Manager_Setting.xaml.cs">
+      <DependentUpon>Mission_Manager_Setting.xaml</DependentUpon>
     </Compile>
     <Page Include="View\Controller\StatusBar.xaml">
       <SubType>Designer</SubType>
@@ -131,6 +137,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Controller\tb_Mission.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Window\Connection_Setting.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -140,6 +150,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Window\Mission_Manager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Window\Mission_Manager_Setting.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

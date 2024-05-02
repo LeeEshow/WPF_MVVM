@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Windows;
 
 namespace WPF
@@ -29,9 +30,38 @@ namespace WPF
     /// <summary>
     /// ViewModel
     /// </summary>
-    public static class VM
+    public static class WPF_MVVM
     {
         // ViewModel 方式傳遞 
-
+        public static Mission.Manager Manager = new Mission.Manager();
     }
+
+}
+
+/// <summary>
+/// 靜態擴充
+/// </summary>
+public static class ExtensionMethods
+{
+    [DllImport("user32.dll")]
+    static extern IntPtr FindWindow(string strClass, string window);
+    [DllImport("user32.dll", SetLastError = true)]
+    public static extern IntPtr SetForegroundWindow(IntPtr ptr);
+    /// <summary>
+    /// 開啟視窗，僅開啟一個若重複執行將視窗至前。
+    /// </summary>
+    /// <param name="window"></param>
+    public static void ShowOnly(this Window window)
+    {
+        IntPtr ptr = FindWindow(null, window.Title);
+        if (ptr == IntPtr.Zero)
+        {
+            window.Show();
+        }
+        else
+        {
+            SetForegroundWindow(ptr);
+        }
+    }
+
 }

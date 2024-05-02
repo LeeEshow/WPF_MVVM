@@ -7,11 +7,78 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Title="任務管理" Height="300" Width="500"
+    Title="任務管理器" Height="350" Width="550"
     WindowTitleBrush="{StaticResource OuterFrame}" BorderThickness="0" 
     Background="{DynamicResource Panel_1}" WindowStartupLocation="CenterScreen">
-    
-    <Grid>
-        <Component:pan_Mission Margin="5" Background="{StaticResource Panel_2}" />
-    </Grid>
+
+    <DockPanel Margin="3">
+        <Grid DockPanel.Dock="Top"/>
+        <Grid DockPanel.Dock="Bottom">
+            <Button Content="新增任務" Height="30" Width="80" Style="{StaticResource defButton}"
+                    HorizontalAlignment="Right" Margin="10" Click="Add_Mission" />
+        </Grid>
+        
+        <!--#region DataGrid -->
+        <Grid ScrollViewer.VerticalScrollBarVisibility="Visible">
+            <DataGrid DockPanel.Dock="Top" x:Name="dg_Data" Style="{StaticResource MainDataGrid}" 
+                  AutoGenerateColumns="False" IsReadOnly="True"
+                  SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn  Header="Mission">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Titel, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Margin="5,0"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Start Time">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <DatePicker Text="{Binding Start_Time}" SelectedDateFormat="Long"  Margin="5,0"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Cycle Time">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding Cycle_Time, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Margin="5,0" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Status">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Style="{StaticResource defButton}" Width="60" Click="Button_Click"  Margin="3,0">
+                                    <Button.Content>
+                                        <DockPanel>
+                                            <Image Source="{Binding Operate_Image}" DockPanel.Dock="Left" Width="20"/>
+                                            <TextBlock Text="{Binding IsRunning}" DockPanel.Dock="Right" VerticalAlignment="Center" />
+                                        </DockPanel>
+                                    </Button.Content>
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Count">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Count}" VerticalAlignment="Center" Margin="5,0"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <DockPanel>
+                                    <Button Content="Delete" DockPanel.Dock="Left" Click="Delete_Mission" Style="{StaticResource defButton}" Width="50" Margin="3,0"/>
+                                    <Button Content="Edit" DockPanel.Dock="Left" Click="Edit_Mission" Style="{StaticResource defButton}" Width="50" Margin="3,0"/>
+                                </DockPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <!--#endregion-->
+    </DockPanel>
 </Controls:MetroWindow>

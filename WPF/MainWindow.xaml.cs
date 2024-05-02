@@ -13,7 +13,6 @@ using ToolBox.ExtensionMethods;
 using TestCode;
 using Component;
 using System.Linq;
-using static Component.ViewModel.Mission;
 
 namespace WPF
 {
@@ -129,7 +128,9 @@ namespace WPF
         // Test
         private void btn_test1_Click(object sender, RoutedEventArgs e)
         {
-            MVVM.Manager.Tasks.Add(new MoveFile());
+
+
+
         }
 
 

@@ -14,10 +14,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Light.Blue.xaml" />
 
                 <!-- 導入 Common/Style 路徑上的其他資源 -->
-                <ResourceDictionary Source="pack://application:,,,/Component;component/Styles/Common.xaml"/>
-                <ResourceDictionary Source="pack://application:,,,/Component;component/Styles/Meun.xaml"/>
-                <ResourceDictionary Source="pack://application:,,,/Component;component/Styles/TabItem.xaml"/>
-                <ResourceDictionary Source="pack://application:,,,/Component;component/Styles/Flashing.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Component;component/style.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
 

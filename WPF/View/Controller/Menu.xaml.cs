@@ -16,7 +16,7 @@ namespace WPF
         public Menu()
         {
             InitializeComponent();
-            mi_Mission_Manager.DataContext = MVVM.Manager;
+            mi_Mission_Manager.DataContext = WPF_MVVM.Manager;
         }
 
         // 子視窗 - 連線設定
@@ -33,14 +33,15 @@ namespace WPF
         private void FTP_Setting(object sender, RoutedEventArgs e)
         {
             FTP ftp = new FTP();
-            ftp.Show();
+            ftp.ShowOnly();
         }
 
         // 子視窗 - 任務管理
         private void Mission_Manager(object sender, RoutedEventArgs e)
         {
             Mission_Manager Manager = new Mission_Manager();
-            Manager.Show();
+            Manager.ShowOnly();
+            
         }
     }
 }
