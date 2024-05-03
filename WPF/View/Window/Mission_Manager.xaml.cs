@@ -2,7 +2,7 @@
 using System;
 using System.Reflection;
 using System.Windows;
-using WPF.Processor;
+using WPF.ViewModel;
 using ToolBox.ExtensionMethods;
 using System.Runtime.InteropServices;
 
@@ -58,8 +58,7 @@ namespace WPF
         {
             WPF_MVVM.Manager.Tasks.Add(new MoveFile()
             {
-                Path = "123456",
-                Titel = "Test Loop - " + WPF_MVVM.Manager.Tasks.Count,
+                Titel = "Test Mission - " + WPF_MVVM.Manager.Tasks.Count,
                 Cycle_Time = TimeSpan.Parse("00:00:01")
             });
         }
@@ -81,21 +80,4 @@ namespace WPF
             setting.ShowDialog();
         }
     }
-}
-
-namespace WPF.Processor
-{
-    public class MoveFile : Mission.Loop
-    {
-        public string Path { get; set; }
-
-        public override void Process()
-        {
-            MVVM.Show(this.Titel + " >>>> Cycle " + this.Count);
-        }
-    }
-
-
-
-
 }

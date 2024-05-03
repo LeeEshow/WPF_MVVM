@@ -25,13 +25,13 @@ namespace WPF.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string 設定 {
+        [global::System.Configuration.DefaultSettingValueAttribute("[]")]
+        public string Tasks {
             get {
-                return ((string)(this["設定"]));
+                return ((string)(this["Tasks"]));
             }
             set {
-                this["設定"] = value;
+                this["Tasks"] = value;
             }
         }
     }

@@ -1,6 +1,7 @@
 ﻿using MahApps.Metro.Controls;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -13,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WPF.ViewModel;
 
 namespace WPF
 {
@@ -29,6 +31,7 @@ namespace WPF
 
         public Mission.Loop Mission { get; set; }
         public KeyValue Item { get; set; }
+        public string SaveResult { get; set; }
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
@@ -39,14 +42,19 @@ namespace WPF
                 {
                     foreach (var prop in Mission.GetType().GetProperties())
                     {
-                        list.Add(new KeyValue
+                        // 依照屬性特性值 >> 決定可否提供編輯
+                        if (prop.GetCustomAttribute<PropertyAttribute>() != null ?
+                                prop.GetCustomAttribute<PropertyAttribute>().CanEdit : true)
                         {
-                            Key = prop.Name,
-                            Value = prop.GetValue(Mission).ToString(),
-                            // 依照屬性特性值 >> 決定可否提供編輯
-                            CanEdit = prop.GetCustomAttribute<PropEditAttribute>() != null ?
-                                prop.GetCustomAttribute<PropEditAttribute>().CanEdit : true
-                        });
+
+                            list.Add(new KeyValue
+                            {
+                                Name = prop.GetCustomAttribute<PropertyAttribute>() != null ?
+                                    prop.GetCustomAttribute<PropertyAttribute>().Name : prop.Name,
+                                Key = prop.Name,
+                                Value = prop.GetValue(Mission) != null ? prop.GetValue(Mission).ToString() : "",
+                            });
+                        }
                     }
                 }
                 list.Sort((x, y) => x.Key.CompareTo(y.Key));
@@ -64,11 +72,9 @@ namespace WPF
             {
                 if (Item != null)
                 {
-
+                    TextBox txt = (TextBox)sender;
                     PropertyInfo prop = WPF_MVVM.Manager.SelectedItem.GetType().
                         GetProperty(Item.Key);
-
-                    TextBox txt = (TextBox)sender;
 
                     switch (prop.PropertyType.Name)
                     {
@@ -97,19 +103,24 @@ namespace WPF
                                     null);
                             break;
                     }
+
+                    txt_SaveResult.Text = "已正確儲存";
+
+                    // 觸發 SaveTaskList 事件 以呼叫儲存資料
+                    WPF_MVVM.Manager.SaveTaskList(null, new ListChangedEventArgs(ListChangedType.Reset, 0));
                 }
             }
             catch (Exception ex)
-          {
-               
+            {
+                txt_SaveResult.Text = ex.Message;
             }
         }
     }
 
     public class KeyValue
     {
+        public string Name { get; set; }
         public string Key { get; set; }
         public string Value { get; set; }
-        public bool CanEdit { get; set; }
     }
 }

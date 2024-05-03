@@ -13,6 +13,11 @@ using ToolBox.ExtensionMethods;
 using TestCode;
 using Component;
 using System.Linq;
+using Newtonsoft.Json;
+using System.ComponentModel;
+using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json.Linq;
+using WPF.ViewModel;
 
 namespace WPF
 {
@@ -121,6 +126,22 @@ namespace WPF
                 MVVM.ExceptionEvent(MethodBase.GetCurrentMethod(), ex);
             }
         }
+
+
+        private void MetroWindow_Closing(object sender, CancelEventArgs e)
+        {
+            WPF_MVVM.Manager.Stop();
+
+            // 關閉所有子視窗
+            Window[] buffer = Application.Current.Windows.Cast<Window>().ToArray();
+            foreach (var win in buffer)
+            {
+                if (win.Title != this.Title)
+                {
+                    win.Close();
+                }
+            }
+        }
         #endregion Windows 事件
 
 
@@ -129,20 +150,14 @@ namespace WPF
         private void btn_test1_Click(object sender, RoutedEventArgs e)
         {
 
-
-
         }
-
-
 
 
 
         private void btn_test2_Click(object sender, RoutedEventArgs e)
         {
-
+            
         }
-
-
 
     }
 }

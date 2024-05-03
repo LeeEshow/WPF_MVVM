@@ -9,7 +9,7 @@
     xmlns:local="clr-namespace:WPF"
     mc:Ignorable="d"
     Title="FTP" Height="400" Width="600" 
-    WindowTitleBrush="{StaticResource OuterFrame}" BorderThickness="0" 
+    WindowTitleBrush="{StaticResource OuterFrame}" BorderBrush="{StaticResource FocusForm}"
     Background="{DynamicResource Panel_1}" WindowStartupLocation="CenterScreen">
     
     <Grid>

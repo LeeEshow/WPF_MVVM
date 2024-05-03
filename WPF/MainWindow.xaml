@@ -11,7 +11,7 @@
     Title="MVVM" Height="600" Width="500" BorderThickness="0" 
     WindowStartupLocation="CenterScreen" WindowTitleBrush="{StaticResource OuterFrame}" 
     StateChanged="Window_StateChanged" Background="{StaticResource Panel_1}" 
-    Loaded="MetroWindow_Loaded">
+    Loaded="MetroWindow_Loaded" Closing="MetroWindow_Closing">
 
     <!--#region 視窗框 左邊內容 -->
     <Controls:MetroWindow.LeftWindowCommands>

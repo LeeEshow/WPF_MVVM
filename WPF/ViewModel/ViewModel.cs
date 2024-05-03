@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows;
+using Newtonsoft.Json;
+using WPF.Properties;
 
-namespace WPF
+namespace WPF.ViewModel
 {
     /// <summary>
     /// 作為所有 ViewModel 的基底，提供屬性變化時告知 UI 刷新的方法【OnPropertyChanged】。
@@ -34,6 +37,8 @@ namespace WPF
     {
         // ViewModel 方式傳遞 
         public static Mission.Manager Manager = new Mission.Manager();
+
+        public static MQTT MQTT = new MQTT();
     }
 
 }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Component;
+using WPF.ViewModel;
 
 namespace WPF
 {

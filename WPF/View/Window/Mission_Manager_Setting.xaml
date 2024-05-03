@@ -7,30 +7,37 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Title="編輯設定值" Height="300" Width="400" Loaded="MetroWindow_Loaded"
-    WindowTitleBrush="{StaticResource OuterFrame}" BorderThickness="0" 
-    Background="{DynamicResource Panel_1}">
-    
-    <Grid ScrollViewer.VerticalScrollBarVisibility="Visible">
-        <DataGrid x:Name="dg_Data" Style="{StaticResource MainDataGrid}" AutoGenerateColumns="False" CanUserAddRows="False"
+    WindowTitleBrush="{StaticResource OuterFrame}"
+    Background="{DynamicResource Panel_1}" BorderBrush="{StaticResource FocusForm}" 
+    WindowStartupLocation="CenterScreen">
+
+    <DockPanel>
+        <Grid DockPanel.Dock="Top" ScrollViewer.VerticalScrollBarVisibility="Visible">
+            <DataGrid x:Name="dg_Data" Style="{StaticResource MainDataGrid}" AutoGenerateColumns="False" CanUserAddRows="False"
                   SelectedItem="{Binding Item, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-            <DataGrid.Columns>
-                <DataGridTemplateColumn  Header="Key">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Key}" VerticalAlignment="Center" Margin="5,0"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTemplateColumn  Header="Value">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBox Text="{Binding Value}" ToolTip="{Binding Name}" IsEnabled="{Binding CanEdit}"
-                                     TextChanged="TextBox_TextChanged" Style="{StaticResource defTextBox}" 
-                                     VerticalAlignment="Center" Margin="5,0" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-            </DataGrid.Columns>
-        </DataGrid>
-    </Grid>
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Margin="5,0"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn  Header="設定值">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding Value}" TextChanged="TextBox_TextChanged"
+                                     Style="{StaticResource defTextBox}" VerticalAlignment="Center" 
+                                     Margin="5,0" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <Grid DockPanel.Dock="Bottom">
+            <TextBlock x:Name="txt_SaveResult" Style="{StaticResource defTextBlock}" Margin="0,10" HorizontalAlignment="Center" />
+        </Grid>
+        <Grid/>
+    </DockPanel>
 </Controls:MetroWindow>

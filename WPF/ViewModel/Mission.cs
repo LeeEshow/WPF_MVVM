@@ -5,8 +5,12 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using ToolBox.ExtensionMethods;
+using WPF.Properties;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Serialization;
 
-namespace WPF
+namespace WPF.ViewModel
 {
     public class Mission
     {
@@ -53,10 +57,12 @@ namespace WPF
             }
 
             /// <summary>
-            /// 清單
+            /// 任務清單
             /// </summary>
             public BindingList<Loop> Tasks = new BindingList<Loop>();
-
+            /// <summary>
+            /// 任務數量
+            /// </summary>
             public int Tasks_Count 
             {
                 get => this.Tasks.Count;
@@ -81,11 +87,22 @@ namespace WPF
             /// </summary>
             public Manager()
             {
-                Tasks.ListChanged += Tasks_ListChanged;
+                // 抓取 Settings Tasks 反序列
+                JsonConverter[] converters = { new MissionConverter() };
+                this.Tasks = JsonConvert.DeserializeObject<BindingList<Loop>>(Settings.Default.Tasks,
+                    new JsonSerializerSettings() { Converters = converters });
+
+                Tasks.ListChanged += SaveTaskList;
             }
-            private void Tasks_ListChanged(object sender, ListChangedEventArgs e)
+            /// <summary>
+            /// 資料變更，並儲存資料
+            /// </summary>
+            /// <param name="sender"></param>
+            /// <param name="e"></param>
+            public void SaveTaskList(object sender, ListChangedEventArgs e)
             {
                 OnPropertyChanged("Tasks_Count");
+                Settings.Default.Tasks = this.Tasks.ToJsonString();
             }
 
             /// <summary>
@@ -131,6 +148,38 @@ namespace WPF
                 }
             }
             #endregion 行為
+
+
+            #region 抽象類別 JSON反序列處理
+            public class MissionConverter : JsonConverter
+            {
+                public override bool CanConvert(Type objectType)
+                {
+                    return (objectType == typeof(Loop));
+                }
+
+                public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+                {
+                    JObject jo = JObject.Load(reader);
+                    switch (jo["Class"].Value<string>())
+                    {
+                        case "WPF.ViewModel.MoveFile":
+                            return jo.ToObject<MoveFile>(serializer);
+
+
+                        default:
+                            return jo.ToObject<Loop>(serializer);
+                    }
+                }
+
+                public override bool CanWrite => false;
+
+                public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+                {
+                    throw new NotImplementedException();
+                }
+            }
+            #endregion 抽象類別 JSON反序列處理
         }
 
         /// <summary>
@@ -142,6 +191,7 @@ namespace WPF
             /// <summary>
             /// 任務標題
             /// </summary>
+            [Property("任務標題")]
             public string Titel
             {
                 get => _Titel;
@@ -158,6 +208,7 @@ namespace WPF
             /// <summary>
             /// 起始時間
             /// </summary>
+            [Property("起始時間")]
             public DateTime Start_Time
             {
                 get => _Start_Time;
@@ -174,6 +225,7 @@ namespace WPF
             /// <summary>
             /// 程序循環時間，最小值 1 秒
             /// </summary>
+            [Property("程序循環週期")]
             public TimeSpan Cycle_Time
             {
                 get => _Cycle_Time;
@@ -188,9 +240,25 @@ namespace WPF
             }
             private TimeSpan _Cycle_Time = TimeSpan.Parse("00:00:01");
             /// <summary>
+            /// 執行次數
+            /// </summary>
+            [Property("執行次數")]
+            [JsonIgnore]
+            public uint Count
+            {
+                get => _Count;
+                set
+                {
+                    _Count = value;
+                    OnPropertyChanged();
+                }
+            }
+            private uint _Count = 0;
+            /// <summary>
             /// 執行狀態
             /// </summary>
-            [PropEdit(false)]
+            [Property("執行狀態", CanEdit = false)]
+            [JsonIgnore]
             public bool IsRunning
             {
                 get => _IsRunning;
@@ -208,7 +276,7 @@ namespace WPF
             /// <summary>
             /// 狀態圖示路徑
             /// </summary>
-            [PropEdit(false)]
+            [Property("狀態圖示路徑", CanEdit = false)]
             public string Operate_Image
             {
                 get
@@ -227,19 +295,9 @@ namespace WPF
                     OnPropertyChanged();
                 }
             }
-            /// <summary>
-            /// 執行次數
-            /// </summary>
-            public uint Count
-            {
-                get => _Count;
-                set
-                {
-                    _Count = value;
-                    OnPropertyChanged();
-                }
-            }
-            private uint _Count = 0;
+
+            [Property("物件類別", CanEdit = false)]
+            public string Class => this.GetType().FullName;
 
             private Task _Task;
             private CancellationTokenSource _CancelSource;
@@ -300,12 +358,13 @@ namespace WPF
                         this._CancelSource.Dispose();
                         this._Task = null;
                         this.IsRunning = false;
-                        return true;
                     }
                     else
                     {
-                        throw new Exception($"{this.Titel} 任務已停止。");
+                        this.IsRunning = false;
+                        MVVM.Show($"{this.Titel} 任務已停止。");
                     }
+                    return true;
                 }
                 catch (Exception ex)
                 {
@@ -326,16 +385,26 @@ namespace WPF
     /// <summary>
     /// 屬性可否編輯
     /// </summary>
-    public class PropEditAttribute : Attribute
+    public class PropertyAttribute : Attribute
     {
+        /// <summary>
+        /// 名稱
+        /// </summary>
+        public string Name { get; set; }
+        /// <summary>
+        /// 描述
+        /// </summary>
+        public string Description { get; set; }
         /// <summary>
         /// 可否編輯
         /// </summary>
         public bool CanEdit { get; set; } = true;
 
-        public PropEditAttribute(bool TF)
+        public PropertyAttribute(string Name, string Description = "", bool CanEdit = true)
         {
-            this.CanEdit = TF;
+            this.Name = Name;
+            this.Description = Description;
+            this.CanEdit = CanEdit;
         }
     }
     #endregion 自定義特性
