@@ -314,7 +314,7 @@ namespace WPF.ViewModel
                 #region 管制
                 if (_Task != null)
                 {
-                    throw new Exception($"{this.Titel} 任務正在執行。");
+                    MVVM.Show($"{this.Titel} 任務正在執行。");
                 }
                 if (this.Cycle_Time < TimeSpan.Parse("00:00:01"))
                 {
@@ -325,6 +325,7 @@ namespace WPF.ViewModel
                 _CancelSource = new CancellationTokenSource();
                 this._Task = new Task(() =>
                 {
+                    MVVM.Show("開始執行 >> " + this.Titel);
                     while (!_CancelSource.IsCancellationRequested)
                     {
                         try
@@ -362,8 +363,8 @@ namespace WPF.ViewModel
                     else
                     {
                         this.IsRunning = false;
-                        MVVM.Show($"{this.Titel} 任務已停止。");
                     }
+                    MVVM.Show($"{this.Titel} 任務已停止。");
                     return true;
                 }
                 catch (Exception ex)

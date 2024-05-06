@@ -34,5 +34,53 @@ namespace WPF.Properties {
                 this["Tasks"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string MQTT_ID {
+            get {
+                return ((string)(this["MQTT_ID"]));
+            }
+            set {
+                this["MQTT_ID"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string MQTT_IP {
+            get {
+                return ((string)(this["MQTT_IP"]));
+            }
+            set {
+                this["MQTT_IP"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int MQTT_Port {
+            get {
+                return ((int)(this["MQTT_Port"]));
+            }
+            set {
+                this["MQTT_Port"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool MQTT_RetainMessage {
+            get {
+                return ((bool)(this["MQTT_RetainMessage"]));
+            }
+            set {
+                this["MQTT_RetainMessage"] = value;
+            }
+        }
     }
 }

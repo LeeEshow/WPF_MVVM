@@ -16,7 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using WPF.ViewModel;
 
-namespace WPF
+namespace WPF.View.Window
 {
     /// <summary>
     /// Mission_Manager_Setting.xaml 的互動邏輯

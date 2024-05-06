@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 using WPF.Properties;
 using Component;
 
-namespace WPF
+namespace WPF.View.Window
 {
     /// <summary>
     /// Connection_Setting.xaml 的互動邏輯

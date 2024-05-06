@@ -13,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace WPF
+namespace WPF.View.Window
 {
     /// <summary>
     /// FTP.xaml 的互動邏輯

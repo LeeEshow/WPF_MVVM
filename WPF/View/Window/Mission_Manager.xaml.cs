@@ -6,7 +6,7 @@ using WPF.ViewModel;
 using ToolBox.ExtensionMethods;
 using System.Runtime.InteropServices;
 
-namespace WPF
+namespace WPF.View.Window
 {
     /// <summary>
     /// Mission_Manager.xaml 的互動邏輯

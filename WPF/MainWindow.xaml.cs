@@ -46,8 +46,9 @@ namespace WPF
 
             // 事件宣告
             Settings.Default.PropertyChanged += Default_PropertyChanged;
-            // 把所有例外事件傳遞給 MVVM 統一介面
+            // 把所有例外事件統一傳遞給 MVVM 處理
             Server.ServerException += MVVM.ExceptionEvent;
+            ToolBox.Event.ToolException += MVVM.ExceptionEvent;
             API.Base.APIException += MVVM.ExceptionEvent;
         }
 
@@ -149,7 +150,11 @@ namespace WPF
         // Test
         private void btn_test1_Click(object sender, RoutedEventArgs e)
         {
-
+            WPF_MVVM.MQTT.Topics.Add(new MQTT_Topic 
+            {
+                ShowMessage = false,
+                Topic = "123456",
+            });
         }
 
 

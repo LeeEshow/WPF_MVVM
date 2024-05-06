@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:Component="clr-namespace:Component.View.Controller;assembly=Component"      
     xmlns:local="clr-namespace:WPF" xmlns:viewmodel="clr-namespace:Component.ViewModel;assembly=Component"
-    x:Class="WPF.StatusBar"
+    x:Class="WPF.View.Controller.StatusBar"
     mc:Ignorable="d" 
     d:DesignHeight="30" d:DesignWidth="500">
 

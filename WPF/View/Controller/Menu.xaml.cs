@@ -6,8 +6,9 @@ using System.Windows;
 using System.Windows.Controls;
 using Component;
 using WPF.ViewModel;
+using WPF.View.Window;
 
-namespace WPF
+namespace WPF.View.Controller
 {
     /// <summary>
     /// Menu.xaml 的互動邏輯
@@ -35,6 +36,13 @@ namespace WPF
         {
             FTP ftp = new FTP();
             ftp.ShowOnly();
+        }
+
+        // 子視窗 - MQTT
+        private void MQTT_Setting(object sender, RoutedEventArgs e)
+        {
+            MQTT_Window mqtt = new MQTT_Window();
+            mqtt.ShowOnly();
         }
 
         // 子視窗 - 任務管理

@@ -1,4 +1,8 @@
-﻿namespace WPF.Properties {
+﻿using System;
+using System.Reflection;
+using System.Threading.Tasks;
+
+namespace WPF.Properties {
     
     
     // 這個類別可以讓您處理設定類別上的特定事件:
@@ -11,14 +15,27 @@
         public Settings() {
             // // 若要加入用於儲存與變更設定的事件處理常式，請取消註解下列程式行:
             //
-            // this.SettingChanging += this.SettingChangingEventHandler;
+            this.SettingChanging += this.SettingChangingEventHandler;
             //
             // this.SettingsSaving += this.SettingsSavingEventHandler;
             //
         }
         
         private void SettingChangingEventHandler(object sender, System.Configuration.SettingChangingEventArgs e) {
-            // 在此加入程式碼以處理 SettingChangingEvent 事件。
+            try
+            {
+                _ = Task.Run(() =>
+                {
+                    lock (Default)
+                    {
+                        Default.Save();
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                MVVM.ExceptionEvent(MethodBase.GetCurrentMethod(), ex);
+            }
         }
         
         private void SettingsSavingEventHandler(object sender, System.ComponentModel.CancelEventArgs e) {

@@ -4,14 +4,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:local="clr-namespace:WPF"
+    xmlns:Controller="clr-namespace:WPF.View.Controller"
     xmlns:Component="clr-namespace:Component.View.Controller;assembly=Component"
     x:Class="WPF.MainWindow"
     mc:Ignorable="d"
-    Title="MVVM" Height="600" Width="500" BorderThickness="0" 
+    Title="MVVM" Height="600" Width="500"
     WindowStartupLocation="CenterScreen" WindowTitleBrush="{StaticResource OuterFrame}" 
-    StateChanged="Window_StateChanged" Background="{StaticResource Panel_1}" 
-    Loaded="MetroWindow_Loaded" Closing="MetroWindow_Closing">
+    Background="{StaticResource Panel_1}" BorderBrush="{StaticResource Gray}" 
+    StateChanged="Window_StateChanged" Loaded="MetroWindow_Loaded" Closing="MetroWindow_Closing">
 
     <!--#region 視窗框 左邊內容 -->
     <Controls:MetroWindow.LeftWindowCommands>
@@ -30,8 +30,8 @@
     <!--#endregion-->
 
     <DockPanel>
-        <local:Menu DockPanel.Dock="Top" Background="{StaticResource Panel_2}"/>
-        <local:StatusBar DockPanel.Dock="Bottom" Background="{StaticResource OuterFrame}" Height="30" />
+        <Controller:Menu DockPanel.Dock="Top" Background="{StaticResource Panel_2}"/>
+        <Controller:StatusBar DockPanel.Dock="Bottom" Background="{StaticResource OuterFrame}" Height="30" />
 
         <Grid Margin="3">
             <Grid.RowDefinitions>
