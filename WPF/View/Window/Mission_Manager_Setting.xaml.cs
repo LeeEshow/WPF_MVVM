@@ -31,7 +31,6 @@ namespace WPF.View.Window
 
         public Mission.Loop Mission { get; set; }
         public KeyValue Item { get; set; }
-        public string SaveResult { get; set; }
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {

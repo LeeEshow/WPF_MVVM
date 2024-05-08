@@ -6,47 +6,65 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local="clr-namespace:WPF.View.Window"
+    xmlns:Controller="clr-namespace:WPF.View.Controller"
     mc:Ignorable="d"
-    Title="MQTT" Height="600" Width="800"
+    Title="MQTT" Height="500" Width="700"
     WindowTitleBrush="{StaticResource OuterFrame}" BorderBrush="{StaticResource FocusForm}"
-    Background="{DynamicResource Panel_1}" WindowStartupLocation="CenterScreen">
+    Background="{DynamicResource Panel_1}" WindowStartupLocation="CenterScreen" Loaded="MetroWindow_Loaded" >
 
+    <Controls:MetroWindow.Resources>
+        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource defTextBlock}">
+            <Setter Property="Width" Value="50"/>
+            <Setter Property="Margin" Value="10,0,0,0"/>
+            <Setter Property="TextAlignment" Value="Right"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+        </Style>
+        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource defTextBox}">
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5,0,0,0"/>
+        </Style>
+        <local:BoolToOppositeBoolConverter x:Key="ooposite" />
+    </Controls:MetroWindow.Resources>
 
-    <DockPanel>
-        <DockPanel.Resources>
-            <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource defTextBlock}">
-                <Setter Property="Margin" Value="10,0,0,0"/>
-                <Setter Property="TextAlignment" Value="Right"/>
-                <Setter Property="HorizontalAlignment" Value="Right"/>
-            </Style>
-            <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource defTextBox}">
-                <Setter Property="HorizontalAlignment" Value="Left"/>
-                <Setter Property="VerticalAlignment" Value="Center"/>
-                <Setter Property="Margin" Value="5,0,0,0"/>
-            </Style>
-        </DockPanel.Resources>
-        <!--上 -->
-        <DockPanel DockPanel.Dock="Top" Height="35" Background="{StaticResource Panel_2}">
-            <TextBlock Text="Broker IP" />
-            <TextBox Text="{Binding Broker_IP}" MinWidth="100" />
-            <TextBox Text="{Binding Port, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="50" />
-            <TextBlock Text="ID" />
-            <TextBox Text="{Binding ID}" MinWidth="120" />
-            <TextBlock Text="是否保留訊息" />
-            <CheckBox Margin="5,0,0,0" IsChecked="{Binding RetainMessage}" HorizontalAlignment="Left" />
-            <TextBlock Text="是否自動連線"/>
-            <CheckBox Margin="5,0,0,0" IsChecked="{x:Null}"  HorizontalAlignment="Left"/>
-        </DockPanel>
-        <!--中 -->
-        <Grid Margin="3" Background="{StaticResource Panel_2}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.3*" />
-                <ColumnDefinition Width="3" />
-                <ColumnDefinition Width="0.7*" />
-            </Grid.ColumnDefinitions>
-            <!--Topic List -->
-            <DockPanel ScrollViewer.HorizontalScrollBarVisibility="Visible" Grid.Column="0">
-                <Grid DockPanel.Dock="Top" Margin="0,3">
+    <Grid Margin="3">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.3*" MinWidth="230" />
+            <ColumnDefinition Width="3" />
+            <ColumnDefinition Width="0.7*" />
+        </Grid.ColumnDefinitions>
+        <!--左 -->
+        <DockPanel ScrollViewer.HorizontalScrollBarVisibility="Visible" Grid.Column="0">
+            <!-- 設定欄 -->
+            <DockPanel DockPanel.Dock="Top" Background="{StaticResource Panel_2}" IsEnabled="{Binding IsConnected, Converter={StaticResource ooposite}}">
+                <DockPanel DockPanel.Dock="Top" Margin="0,5,0,0">
+                    <TextBlock  Text="Broker IP" />
+                    <TextBox Text="{Binding Broker_IP}" MinWidth="100" />
+                    <TextBox Text="{Binding Port, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="50" />
+                </DockPanel>
+                <DockPanel DockPanel.Dock="Top" Margin="0,5,0,0">
+                    <TextBlock Text="ID" />
+                    <TextBox x:Name="txt_ID" Text="{Binding ID}" MinWidth="155" />
+                </DockPanel>
+            </DockPanel>
+            <Grid DockPanel.Dock="Top" Background="{StaticResource Panel_2}" Height="40">
+                <DockPanel DockPanel.Dock="Top" Margin="0,5">
+                    <TextBlock DockPanel.Dock="Left" Text="自動連線" />
+                    <CheckBox DockPanel.Dock="Left" Margin="10,0,0,0" IsChecked="{Binding AutoConnect}"  HorizontalAlignment="Left"/>
+                    <Button DockPanel.Dock="Left" Style="{StaticResource defButton}" Height="30" Width="80" 
+                            Margin="10,0,0,0" Click="Connect_Click" HorizontalAlignment="Left">
+                        <Button.Content>
+                            <DockPanel>
+                                <Image Source="{Binding Operate_Image}" Height="22" Margin="0,0,3,0"/>
+                                <TextBlock Text="{Binding Operate}" Style="{x:Null}" VerticalAlignment="Center"/>
+                            </DockPanel>
+                        </Button.Content>
+                    </Button>
+                </DockPanel>
+            </Grid>
+            <!-- Topic List -->
+            <DockPanel Margin="0,3,0,0" Background="{StaticResource Panel_2}">
+                <Grid DockPanel.Dock="Top" Margin="0,5,0,3">
                     <TextBox x:Name="txt_Subscribe" HorizontalAlignment="Stretch" Width="Auto" Margin="5,0,60,0"
                              KeyDown="txt_Subscribe_KeyDown"/>
                     <Button Content="訂閱" Width="50" HorizontalAlignment="Right" Height="25" Margin="0,0,5,0" 
@@ -55,50 +73,74 @@
                 <DataGrid x:Name="gd_Topic" Style="{StaticResource MainDataGrid}"
                           AutoGenerateColumns="False" IsReadOnly="True"
                           SelectedItem="{Binding SelectItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                <DataGrid.Columns>
-                    <DataGridTemplateColumn  Header="訂閱頻道">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <DockPanel>
-                                    <CheckBox IsChecked="{Binding ShowMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{x:Null}" VerticalAlignment="Center"/>
-                                    <TextBlock Text="{Binding Topic}" VerticalAlignment="Center" Margin="5,0"/>
-                                </DockPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button Content="取消" Style="{StaticResource defButton}" Width="40" Height="20" Click="Unsubscribe_Click"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                </DataGrid.Columns>
-            </DataGrid>
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn  Header="顯示訊息">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <DockPanel>
+                                        <CheckBox Content="{Binding Topic}" IsChecked="{Binding ShowMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                  Style="{x:Null}" VerticalAlignment="Center"/>
+                                    </DockPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="訊息轉至主界面">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox IsChecked="{Binding ToMainWindow, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                              HorizontalAlignment="Center" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="取消訂閱" Style="{StaticResource defButton}" Width="60" Height="25" Click="Unsubscribe_Click"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
             </DockPanel>
-            <GridSplitter Grid.Column="1" Width="3" Background="{StaticResource Panel_1}" />
-            <!-- Message Panel -->
-            <Grid ScrollViewer.HorizontalScrollBarVisibility="Visible" Grid.Column="2">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="0.7*" />
-                    <RowDefinition Height="3" />
-                    <RowDefinition Height="0.3*" />
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
-                    
-                </Grid>
-                <GridSplitter Grid.Row="1" Height="3" HorizontalAlignment="Stretch" Background="{StaticResource Panel_1}" />
-                <!-- 發佈 -->
-                <Grid Grid.Row="2" Background="{StaticResource Panel_2}">
-                    <TextBox x:Name="txt_Publish" FontSize="14" Style="{StaticResource defTextArea}" Margin="5,30,110,5"/>
-                    <Button Content="發佈" Style="{StaticResource defButton}" Click="Publish_Click" 
-                            Width="100" HorizontalAlignment="Right" Margin="0,30,5,5" />
-                    <Grid VerticalAlignment="Top" Height="30">
-                        <TextBlock Text="發布頻道" HorizontalAlignment="Left" />
-                        <ComboBox x:Name="cbb_Topic" DockPanel.Dock="Top" Margin="70,3,5,3"/>
-                    </Grid>
-                </Grid>
+        </DockPanel>
+        <GridSplitter Grid.Column="1" Width="3" Background="{StaticResource Panel_1}" />
+        <!-- Message Panel -->
+        <Grid ScrollViewer.HorizontalScrollBarVisibility="Visible" Grid.Column="2" Background="{StaticResource Panel_2}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.7*" />
+                <RowDefinition Height="3" />
+                <RowDefinition Height="0.3*" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <RichTextBox x:Name="rtb_msage" Margin="0,1,0,0" IsReadOnly="True" VerticalScrollBarVisibility="Visible" 
+                             TextChanged="RichTextBox_TextChanged" Background="{StaticResource Panel_2}" 
+                             Foreground="{StaticResource Gray}" BorderThickness="0" FontSize="1">
+                    <FlowDocument>
+                        <Paragraph x:Name="txt_MQTTMessage">
+                            <ItemsControl />
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
             </Grid>
+            <GridSplitter Grid.Row="1" Height="3" HorizontalAlignment="Stretch" Background="{StaticResource Panel_1}" />
+            <!-- 發佈 -->
+            <DockPanel Grid.Row="2" Background="{StaticResource Panel_2}">
+                <DockPanel DockPanel.Dock="Right">
+                    <DockPanel DockPanel.Dock="Top" Height="35">
+                        <TextBlock Text="保留訊息" Width="Auto" HorizontalAlignment="Right"/>
+                        <CheckBox Margin="5,0,10,0" IsChecked="{Binding RetainMessage}" HorizontalAlignment="Left" />
+                    </DockPanel>
+                    <Button Content="發佈" Style="{StaticResource defButton}" Click="Publish_Click" 
+                            Margin="0,0,5,5" />
+                </DockPanel>
+                <DockPanel>
+                    <DockPanel DockPanel.Dock="Top" Height="35">
+                        <TextBlock DockPanel.Dock="Left" Text="發布頻道" HorizontalAlignment="Left" Width="50"/>
+                        <ComboBox x:Name="cbb_Topic" Margin="5"/>
+                    </DockPanel>
+                    <TextBox x:Name="txt_Publish" FontSize="14" Style="{StaticResource defTextArea}" Margin="5,0,5,5"/>
+                </DockPanel>
+            </DockPanel>
         </Grid>
-    </DockPanel>
+    </Grid>
 </Controls:MetroWindow>

@@ -24,10 +24,8 @@ namespace WPF.View.Controller
         // 子視窗 - 連線設定
         private void Connecting_Setting(object sender, RoutedEventArgs e)
         {
-            Connection_Setting Setting = new Connection_Setting
-            {
-                Title = "設定後請測試連線",
-            };
+            Connection_Setting Setting = new Connection_Setting();
+            Setting.Title = "設定後請測試連線";
             Setting.ShowDialog();
         }
 
@@ -50,7 +48,6 @@ namespace WPF.View.Controller
         {
             Mission_Manager Manager = new Mission_Manager();
             Manager.ShowOnly();
-            
         }
     }
 }

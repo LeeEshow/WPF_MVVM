@@ -1,0 +1,20 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPF.View.Controller"
+             xmlns:controlzex="urn:controlzex" x:Class="WPF.View.Controller.tb_MQTT"
+             mc:Ignorable="d" 
+             d:DesignHeight="30" d:DesignWidth="40">
+
+    <ToolBar VerticalAlignment="Center" Background="{x:Null}">
+        <Button Style="{StaticResource Menu_Button}" Height="25" Click="Button_Click" ToolTip="MQTT">
+            <DockPanel>
+                <Image Source="{Binding Operate_Image}" Margin="0,0,5,0" />
+                <TextBlock Text="{Binding Operate}" Foreground="{StaticResource White}" 
+                           VerticalAlignment="Center" HorizontalAlignment="Left"/>
+            </DockPanel>
+        </Button>
+    </ToolBar>
+</UserControl>

@@ -18,6 +18,7 @@ using System.ComponentModel;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json.Linq;
 using WPF.ViewModel;
+using WPF.View.Window;
 
 namespace WPF
 {
@@ -120,7 +121,14 @@ namespace WPF
             try
             {
                 // DB 連線測試
-                MVVM.Initialize();
+                if (MVVM.DBConfig.AutoTest)
+                {
+                    MVVM.DBConfig.TestConnect();
+                }
+                if (WPF_MVVM.MQTT.AutoConnect)
+                {
+                    WPF_MVVM.MQTT.Connect();
+                }
             }
             catch (Exception ex)
             {
@@ -148,13 +156,10 @@ namespace WPF
 
         // ---------------------------------------------------------------------------------------
         // Test
+
         private void btn_test1_Click(object sender, RoutedEventArgs e)
         {
-            WPF_MVVM.MQTT.Topics.Add(new MQTT_Topic 
-            {
-                ShowMessage = false,
-                Topic = "123456",
-            });
+            
         }
 
 

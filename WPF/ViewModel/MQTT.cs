@@ -9,6 +9,7 @@ using ToolBox.Common;
 using ToolBox.ExtensionMethods;
 using WPF.Properties;
 using Client = ToolBox.Common.MQTT.Client;
+using Newtonsoft.Json;
 
 namespace WPF.ViewModel
 {
@@ -68,10 +69,56 @@ namespace WPF.ViewModel
             }
         }
         /// <summary>
+        /// 是否以連線
+        /// </summary>
+        public bool IsConnected { get; set; }
+        /// <summary>
+        /// 是否啟動程序時自動連線
+        /// </summary>
+        public bool AutoConnect
+        {
+            get => Settings.Default.MQTT_AutoConnect;
+            set
+            {
+                Settings.Default.MQTT_AutoConnect = value;
+                OnPropertyChanged();
+            }
+        }
+        /// <summary>
+        /// 操作圖示
+        /// </summary>
+        public string Operate_Image
+        {
+            get => Operate_Image_;
+            set
+            {
+                Operate_Image_ = value;
+                OnPropertyChanged();
+            }
+        }
+        private string Operate_Image_ = "pack://siteoforigin:,,,/Resources/link.png";
+        /// <summary>
+        /// 操作狀態
+        /// </summary>
+        public string Operate
+        {
+            get => Operate_;
+            set
+            {
+                Operate_ = value;
+                OnPropertyChanged();
+            }
+        }
+        private string Operate_ = "連線";
+        /// <summary>
         /// 訂閱頻道清單
         /// </summary>
-        public BindingList<MQTT_Topic> Topics { get; set; } = new BindingList<MQTT_Topic>();
-        private List<string> Topics_ = new List<string>();
+        public BindingList<MQTT_Topic> Topics => Topics_;
+        private BindingList<MQTT_Topic> Topics_ = new BindingList<MQTT_Topic>();
+        /// <summary>
+        /// 訊息清單
+        /// </summary>
+        public List<MQTT_Message> Messages = new List<MQTT_Message>();
         #endregion 屬性
 
         #region ViewModel 實作
@@ -83,26 +130,169 @@ namespace WPF.ViewModel
         #endregion ViewModel 實作
 
         #region 行為
+        /// <summary>
+        /// 初始化
+        /// </summary>
         public MQTT()
         {
-            Topics.ListChanged += Topics_ListChanged;
+            Topics_ = Settings.Default.MQTT_Topic.ToObject<BindingList<MQTT_Topic>>();
+            Topics_.ListChanged += SaveConfig;
+            this.StatusChanged += MQTT_StatusChanged;
+            this.MessageReceived += MQTT_MessageReceived;
+        }
+        internal void SaveConfig(object sender, ListChangedEventArgs e)
+        {
+            Settings.Default.MQTT_Topic = this.Topics_.ToJsonString();
         }
 
-        private void Topics_ListChanged(object sender, ListChangedEventArgs e)
+
+        /// <summary>
+        /// 訂閱頻道
+        /// </summary>
+        /// <param name="Topic"></param>
+        public override void Subscribe(string[] Topic)
         {
-            // 處理頻道訂閱
-            this.Unsubscribe(Topics_.ToArray());
-            Topics_ = Topics.Select(x => x.Topic).ToList();
-            this.Subscribe(Topics_.ToArray());
+            base.Subscribe(Topic);
+            foreach (var item in Topic)
+            {
+                if (Topics_.ToList().Find(x => x.Topic == item) == null)
+                {
+                    Topics_.Add(new MQTT_Topic
+                    {
+                        ShowMessage = true,
+                        Topic = item,
+                        ToMainWindow = false
+                    });
+                }
+            }
+        }
+        /// <summary>
+        /// 取消訂閱頻道
+        /// </summary>
+        /// <param name="Topic"></param>
+        public override void Unsubscribe(string[] Topic)
+        {
+            foreach (var item in Topic)
+            {
+                var data = Topics_.ToList().Find(x => x.Topic == item);
+                if (data != null)
+                {
+                    base.Unsubscribe(new string[] { item });
+                    Topics_.Remove(data);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 連線
+        /// </summary>
+        public new void Connect()
+        {
+            if (!this.IsConnected)
+            {
+                if (!string.IsNullOrEmpty(this.Broker_IP) &&
+                    !string.IsNullOrEmpty(this.ID))
+                {
+                    base.Connect();
+                    this.Subscribe(new string[] { this.ID });
+                }
+            }
+            else
+            {
+                base.Disconnect();
+            }
         }
         #endregion 行為
+
+        #region Event
+        private void MQTT_StatusChanged(ToolBox.Common.MQTT.MQTT_ConnectStatus Status, string Message)
+        {
+            if (Status == ToolBox.Common.MQTT.MQTT_ConnectStatus.Connected)
+            {
+                IsConnected = true;
+                Operate_Image = "pack://siteoforigin:,,,/Resources/link_off.png";
+                Operate = "斷開";
+
+                MVVM.Show("MQTT is Connected");
+                this.Subscribe(WPF_MVVM.MQTT.Topics.Select(x => x.Topic).ToArray());
+                foreach (var item in WPF_MVVM.MQTT.Topics)
+                {
+                    MVVM.Show($"Subscribe Topic：{item.Topic}");
+                }
+            }
+            else
+            {
+                IsConnected = false;
+                Operate_Image = "pack://siteoforigin:,,,/Resources/link.png";
+                Operate = "連線";
+
+                MVVM.Show(string.IsNullOrEmpty(Message) ? $"MQTT：{Status.ToString()}" : $"MQTT is {Message}");
+            }
+            OnPropertyChanged("IsConnected");
+        }
+
+        private void MQTT_MessageReceived(ToolBox.Common.MQTT.MQTT_Message Message)
+        {
+            if (this.Topics.ToList().Find(x => x.Topic == Message.Topic).ToMainWindow)
+            {
+                MVVM.Show($"MQTT Message：{Message.Content}");
+            }
+
+            Messages.Add(new MQTT_Message
+            {
+                DateTime = DateTime.Now,
+                Message = Message
+            });
+
+            while (Messages.Count > 100)
+            {
+                Messages.RemoveAt(0);
+            }
+        }
+        #endregion Event
     }
 
 
-    public class MQTT_Topic
+    public class MQTT_Topic : ViewModelBase
     {
-        public bool ShowMessage { get; set; }
+        public bool ShowMessage 
+        {
+            get => ShowMessage_;
+            set
+            {
+                ShowMessage_ = value;
+                OnPropertyChanged();
+            }
+        }
+        private bool ShowMessage_;
+
         public string Topic { get; set; }
+
+        public bool ToMainWindow
+        {
+            get => ToMainWindow_;
+            set
+            {
+                ToMainWindow_ = value;
+                OnPropertyChanged();
+            }
+        }
+        private bool ToMainWindow_;
+
+        protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            base.OnPropertyChanged();
+            if (WPF_MVVM.MQTT != null)
+            {
+                WPF_MVVM.MQTT.SaveConfig(null, null);
+            }
+        }
+    }
+
+    public class MQTT_Message
+    {
+        public DateTime DateTime { get; set; }
+        public ToolBox.Common.MQTT.MQTT_Message Message { get; set; }
     }
 
 

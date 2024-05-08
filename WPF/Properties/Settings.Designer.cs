@@ -82,5 +82,29 @@ namespace WPF.Properties {
                 this["MQTT_RetainMessage"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("[]")]
+        public string MQTT_Topic {
+            get {
+                return ((string)(this["MQTT_Topic"]));
+            }
+            set {
+                this["MQTT_Topic"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool MQTT_AutoConnect {
+            get {
+                return ((bool)(this["MQTT_AutoConnect"]));
+            }
+            set {
+                this["MQTT_AutoConnect"] = value;
+            }
+        }
     }
 }

@@ -11,7 +11,7 @@
 
     <DockPanel>
         <Component:sbi_DBConfig DockPanel.Dock="Left" Margin="5,0" />
-        <Grid DockPanel.Dock="Left" Margin="0,3" Width="2" Background="{StaticResource Gray}"/>
+        <Border Style="{StaticResource Divider}" />
         <Component:sbi_Error DockPanel.Dock="Right" Margin="5,0" MinWidth="60"/>
         <Grid />
     </DockPanel>
