@@ -9,6 +9,7 @@ using WPF.Properties;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
+using System.Linq;
 
 namespace WPF.ViewModel
 {
@@ -43,11 +44,11 @@ namespace WPF.ViewModel
                 {
                     if (Operate == "Stop")
                     {
-                        return "pack://siteoforigin:,,,/Resources/stop.png";
+                        return "/WPF;component/Image/stop_circle.png";
                     }
                     else
                     {
-                        return "pack://siteoforigin:,,,/Resources/play.png";
+                        return "/WPF;component/Image/play_circle.png";
                     }
                 }
                 set
@@ -92,17 +93,22 @@ namespace WPF.ViewModel
                 this.Tasks = JsonConvert.DeserializeObject<BindingList<Loop>>(Settings.Default.Tasks,
                     new JsonSerializerSettings() { Converters = converters });
 
-                Tasks.ListChanged += SaveTaskList;
+                Tasks.ListChanged += SaveConfig;
             }
             /// <summary>
             /// 資料變更，並儲存資料
             /// </summary>
             /// <param name="sender"></param>
             /// <param name="e"></param>
-            public void SaveTaskList(object sender, ListChangedEventArgs e)
+            public void SaveConfig(object sender, ListChangedEventArgs e)
             {
                 OnPropertyChanged("Tasks_Count");
                 Settings.Default.Tasks = this.Tasks.ToJsonString();
+
+                if (Tasks.ToList().Find(x => !x.IsRunning) == null)
+                {
+                    Operate = "Stop";
+                }
             }
 
             /// <summary>
@@ -283,11 +289,11 @@ namespace WPF.ViewModel
                 {
                     if (IsRunning)
                     {
-                        return "pack://siteoforigin:,,,/Resources/stop.png";
+                        return "/WPF;component/Image/stop.png";
                     }
                     else
                     {
-                        return "pack://siteoforigin:,,,/Resources/play.png";
+                        return "/WPF;component/Image/play.png";
                     }
                 }
                 set
@@ -295,6 +301,20 @@ namespace WPF.ViewModel
                     OnPropertyChanged();
                 }
             }
+            /// <summary>
+            /// 啟動時自動執行
+            /// </summary>
+            [Property("啟動時自動執行", CanEdit = false)]
+            public bool AutoRun
+            {
+                get => AutoRun_;
+                set
+                {
+                    AutoRun_ = value;
+                    OnPropertyChanged();
+                }
+            }
+            private bool AutoRun_ = false;
 
             [Property("物件類別", CanEdit = false)]
             public string Class => this.GetType().FullName;

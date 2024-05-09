@@ -13,7 +13,7 @@ namespace WPF.View.Controller
         public tb_Mission()
         {
             InitializeComponent();
-            tb_Status.DataContext = WPF_MVVM.Manager;
+            this.DataContext = WPF_MVVM.Manager;
         }
 
         // 啟動終止操作

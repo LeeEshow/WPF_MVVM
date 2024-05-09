@@ -18,16 +18,6 @@ namespace WPF.View.Window
             InitializeComponent();
             this.DataContext = WPF_MVVM.Manager;
             dg_Data.ItemsSource = WPF_MVVM.Manager.Tasks;
-            WPF_MVVM.Manager.Tasks.ListChanged += Tasks_ListChanged;
-        }
-
-        private void Tasks_ListChanged(object sender, System.ComponentModel.ListChangedEventArgs e)
-        {
-            try
-            {
-                dg_Data.Items.Refresh();
-            }
-            catch { }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

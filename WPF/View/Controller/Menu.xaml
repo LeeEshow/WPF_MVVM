@@ -14,13 +14,17 @@
         <!-- 左側選單列 -->
         <Menu DockPanel.Dock="Left" VerticalAlignment="Center" Background="{x:Null}">
             <MenuItem Header="Setup" Style="{StaticResource Menu_Header}">
-                <MenuItem Header="資料庫連線設定" Click="Connecting_Setting" >
+                <MenuItem Header="資料庫設定" Click="Connecting_Setting" >
                     <MenuItem.Icon>
-                        <Image Width="16" Source="pack://siteoforigin:,,,/Resources/database.png"/>
+                        <Image Width="20" Source="/WPF;component/Image/server.png" Margin="10,0,0,0"/>
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Header="FTP" Click="FTP_Setting" />
-                <MenuItem Header="MQTT" Click="MQTT_Setting" />
+                <MenuItem Header="MQTT" Click="MQTT_Setting">
+                    <MenuItem.Icon>
+                        <Image Width="20" Source="/WPF;component/Image/MQTT.png" Margin="10,0,0,0"/>
+                    </MenuItem.Icon>
+                </MenuItem>
                 <Separator Grid.Column="2" Margin="0, 3" Background="{StaticResource Gray}"/>
                 <MenuItem x:Name="mi_Mission_Manager" Click="Mission_Manager">
                     <MenuItem.Header>
@@ -40,10 +44,13 @@
 
         <!-- 右側功能列 -->
         <ToolBarPanel DockPanel.Dock="Right" Orientation="Horizontal">
-            <Controller:tb_Mission />
-            <Border Style="{StaticResource Divider}"/>
-            <Controller:tb_MQTT ToolBarTray.IsLocked="True" />
+            <ToolBar>
+                <Controller:tb_MQTT />
+                <Border Style="{StaticResource Divider}"/>
+                <Controller:tb_Mission/>
+            </ToolBar>
         </ToolBarPanel>
+        
         <Grid/>
     </DockPanel>
 </UserControl>

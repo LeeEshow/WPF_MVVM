@@ -41,7 +41,7 @@ namespace WPF
             }
             catch
             {
-                this.Title += " - 開發版";
+                this.Title += " - 開發版本";
             }
             #endregion 版本號
 
@@ -120,7 +120,7 @@ namespace WPF
         {
             try
             {
-                // DB 連線測試
+                // 啟動時自動執行
                 if (MVVM.DBConfig.AutoTest)
                 {
                     MVVM.DBConfig.TestConnect();
@@ -129,13 +129,19 @@ namespace WPF
                 {
                     WPF_MVVM.MQTT.Connect();
                 }
+                foreach (var mission in WPF_MVVM.Manager.Tasks)
+                {
+                    if (mission.AutoRun)
+                    {
+                        mission.Run();
+                    }
+                }
             }
             catch (Exception ex)
             {
                 MVVM.ExceptionEvent(MethodBase.GetCurrentMethod(), ex);
             }
         }
-
 
         private void MetroWindow_Closing(object sender, CancelEventArgs e)
         {
@@ -159,7 +165,7 @@ namespace WPF
 
         private void btn_test1_Click(object sender, RoutedEventArgs e)
         {
-            
+            var data = Settings.Default.GetType().GetProperties();
         }
 
 

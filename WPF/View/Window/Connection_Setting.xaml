@@ -31,14 +31,6 @@
     </Window.Resources>
     <!--#endregion-->
 
-    <!--#region 視窗框 左邊內容 -->
-    <Controls:MetroWindow.LeftWindowCommands>
-        <Controls:WindowCommands>
-            <Image Width="20" Height="20" Margin="10,5" Source="pack://siteoforigin:,,,/Resources/Connection.png" />
-        </Controls:WindowCommands>
-    </Controls:MetroWindow.LeftWindowCommands>
-    <!--#endregion-->
-    
     <Grid>
         <TabControl Style="{StaticResource MahApps.Styles.Control.WindowCommands}" 
                     Background="{DynamicResource Panel_2}" 
@@ -46,16 +38,11 @@
             
             <!--#region Database -->
             <TabItem Header="SQL Server" Style="{StaticResource conTabItem}" >
-                <Grid x:Name="gri_DB" >
+                <Grid x:Name="gri_DB" Margin="0,5,0,0" >
                     <Component:pan_DBConfig />
                 </Grid>
             </TabItem>
             <!--#endregion-->
-
-            <TabItem Header="MQTT" Style="{StaticResource conTabItem}" >
-                <Grid>
-                </Grid>
-            </TabItem>
             
         </TabControl>
     </Grid>

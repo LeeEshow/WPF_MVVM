@@ -31,17 +31,17 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Start Time">
+                    <DataGridTemplateColumn Header="Auto Run">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <DatePicker Text="{Binding Start_Time}" SelectedDateFormat="Long"  Margin="5,0"/>
+                                <CheckBox IsChecked="{Binding AutoRun, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="Cycle Time">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBox Text="{Binding Cycle_Time, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Margin="5,0" />
+                                <TextBox Text="{Binding Cycle_Time, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Margin="5,0" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

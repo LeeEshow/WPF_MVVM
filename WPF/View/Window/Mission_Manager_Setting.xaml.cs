@@ -106,7 +106,7 @@ namespace WPF.View.Window
                     txt_SaveResult.Text = "已正確儲存";
 
                     // 觸發 SaveTaskList 事件 以呼叫儲存資料
-                    WPF_MVVM.Manager.SaveTaskList(null, new ListChangedEventArgs(ListChangedType.Reset, 0));
+                    //WPF_MVVM.Manager.SaveConfig(null, new ListChangedEventArgs(ListChangedType.Reset, 0));
                 }
             }
             catch (Exception ex)

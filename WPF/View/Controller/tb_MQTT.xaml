@@ -6,15 +6,13 @@
              xmlns:local="clr-namespace:WPF.View.Controller"
              xmlns:controlzex="urn:controlzex" x:Class="WPF.View.Controller.tb_MQTT"
              mc:Ignorable="d" 
-             d:DesignHeight="30" d:DesignWidth="40">
+             d:DesignHeight="30" d:DesignWidth="80">
 
-    <ToolBar VerticalAlignment="Center" Background="{x:Null}">
-        <Button Style="{StaticResource Menu_Button}" Height="25" Click="Button_Click" ToolTip="MQTT">
-            <DockPanel>
-                <Image Source="{Binding Operate_Image}" Margin="0,0,5,0" />
-                <TextBlock Text="{Binding Operate}" Foreground="{StaticResource White}" 
+    <Button Style="{StaticResource ToolBar_Button}" Height="25" Click="Button_Click" ToolTip="MQTT">
+        <DockPanel Margin="5,0">
+            <Image Source="{Binding Operate_Image}" Margin="0,0,5,0" />
+            <TextBlock Text="{Binding Operate}" Foreground="{StaticResource White}" 
                            VerticalAlignment="Center" HorizontalAlignment="Left"/>
-            </DockPanel>
-        </Button>
-    </ToolBar>
+        </DockPanel>
+    </Button>
 </UserControl>

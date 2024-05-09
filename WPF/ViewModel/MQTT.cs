@@ -19,6 +19,14 @@ namespace WPF.ViewModel
     // 如果是 C# 8 就可以這樣做 => MQTT : ViewModelBase, IMQTT.Client
     public class MQTT : Client, INotifyPropertyChanged
     {
+        #region ViewModel 實作
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion ViewModel 實作
+
         #region 屬性
         /// <summary>
         /// MQTT ID
@@ -96,7 +104,7 @@ namespace WPF.ViewModel
                 OnPropertyChanged();
             }
         }
-        private string Operate_Image_ = "pack://siteoforigin:,,,/Resources/link.png";
+        private string Operate_Image_ = "/WPF;component/Image/link.png";
         /// <summary>
         /// 操作狀態
         /// </summary>
@@ -120,14 +128,6 @@ namespace WPF.ViewModel
         /// </summary>
         public List<MQTT_Message> Messages = new List<MQTT_Message>();
         #endregion 屬性
-
-        #region ViewModel 實作
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        #endregion ViewModel 實作
 
         #region 行為
         /// <summary>
@@ -210,7 +210,7 @@ namespace WPF.ViewModel
             if (Status == ToolBox.Common.MQTT.MQTT_ConnectStatus.Connected)
             {
                 IsConnected = true;
-                Operate_Image = "pack://siteoforigin:,,,/Resources/link_off.png";
+                Operate_Image = "/WPF;component/Image/link_off.png";
                 Operate = "斷開";
 
                 MVVM.Show("MQTT is Connected");
@@ -223,7 +223,7 @@ namespace WPF.ViewModel
             else
             {
                 IsConnected = false;
-                Operate_Image = "pack://siteoforigin:,,,/Resources/link.png";
+                Operate_Image = "/WPF;component/Image/link.png";
                 Operate = "連線";
 
                 MVVM.Show(string.IsNullOrEmpty(Message) ? $"MQTT：{Status.ToString()}" : $"MQTT is {Message}");
@@ -252,7 +252,7 @@ namespace WPF.ViewModel
         #endregion Event
     }
 
-
+    #region Other Class
     public class MQTT_Topic : ViewModelBase
     {
         public bool ShowMessage 
@@ -294,6 +294,6 @@ namespace WPF.ViewModel
         public DateTime DateTime { get; set; }
         public ToolBox.Common.MQTT.MQTT_Message Message { get; set; }
     }
-
+    #endregion Other Class
 
 }
