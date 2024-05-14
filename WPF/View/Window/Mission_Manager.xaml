@@ -13,10 +13,15 @@
 
     <DockPanel>
         <Grid DockPanel.Dock="Top"/>
-        <Grid DockPanel.Dock="Bottom">
-            <Button Content="新增任務" Height="30" Width="80" Style="{StaticResource defButton}"
-                    HorizontalAlignment="Right" Margin="10" Click="Add_Mission" />
-        </Grid>
+        <DockPanel DockPanel.Dock="Bottom" Background="{StaticResource Panel_2}">
+            <CheckBox x:Name="cb_Limit" DockPanel.Dock="Left" Margin="10" Click="CheckBox_Click"  />
+            <TextBlock DockPanel.Dock="Left" Text="超過" VerticalAlignment="Center" Style="{StaticResource defTextBlock}"/>
+            <TextBox x:Name="txt_Limit" DockPanel.Dock="Left" Text="{Binding Exception_Limit}" Height="22" Width="30" Margin="3,0" Style="{StaticResource defTextBox}"/>
+            <TextBlock DockPanel.Dock="Left" Text="次異常即終止所有任務" VerticalAlignment="Center" Style="{StaticResource defTextBlock}"/>
+            <Button DockPanel.Dock="Right" Content="新增任務" Height="30" Width="80" 
+                    Style="{StaticResource defButton}" Margin="10" Click="Add_Mission" />
+            <Grid />
+        </DockPanel>
         
         <!--#region DataGrid -->
         <Grid ScrollViewer.VerticalScrollBarVisibility="Visible">
@@ -66,12 +71,13 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="">
+                    <DataGridTemplateColumn Header="" Width="100*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <DockPanel>
                                     <Button Content="移除" DockPanel.Dock="Left" Click="Delete_Mission" Style="{StaticResource defButton}" Width="50" Margin="3,0"/>
                                     <Button Content="設定" DockPanel.Dock="Left" Click="Edit_Mission" Style="{StaticResource defButton}" Width="50" Margin="3,0"/>
+                                    <Grid />
                                 </DockPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>

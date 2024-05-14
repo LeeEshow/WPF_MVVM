@@ -77,10 +77,6 @@ namespace WPF.ViewModel
             }
         }
         /// <summary>
-        /// 是否以連線
-        /// </summary>
-        public bool IsConnected { get; set; }
-        /// <summary>
         /// 是否啟動程序時自動連線
         /// </summary>
         public bool AutoConnect
@@ -118,6 +114,19 @@ namespace WPF.ViewModel
             }
         }
         private string Operate_ = "連線";
+        /// <summary>
+        /// 連線狀態燈號
+        /// </summary>
+        public string Signal
+        {
+            get { return _Signal; }
+            set
+            {
+                _Signal = value;
+                OnPropertyChanged();
+            }
+        }
+        private string _Signal = "Black";
         /// <summary>
         /// 訂閱頻道清單
         /// </summary>
@@ -209,9 +218,9 @@ namespace WPF.ViewModel
         {
             if (Status == ToolBox.Common.MQTT.MQTT_ConnectStatus.Connected)
             {
-                IsConnected = true;
                 Operate_Image = "/WPF;component/Image/link_off.png";
                 Operate = "斷開";
+                Signal = MVVM.Resources["Green"];
 
                 MVVM.Show("MQTT is Connected");
                 this.Subscribe(WPF_MVVM.MQTT.Topics.Select(x => x.Topic).ToArray());
@@ -222,9 +231,9 @@ namespace WPF.ViewModel
             }
             else
             {
-                IsConnected = false;
                 Operate_Image = "/WPF;component/Image/link.png";
                 Operate = "連線";
+                Signal = MVVM.Resources["Red"];
 
                 MVVM.Show(string.IsNullOrEmpty(Message) ? $"MQTT：{Status.ToString()}" : $"MQTT is {Message}");
             }

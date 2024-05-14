@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
 using System.Threading;
@@ -8,7 +7,6 @@ using ToolBox.ExtensionMethods;
 using WPF.Properties;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Serialization;
 using System.Linq;
 
 namespace WPF.ViewModel
@@ -68,6 +66,18 @@ namespace WPF.ViewModel
             {
                 get => this.Tasks.Count;
             }
+            /// <summary>
+            /// 任務終止條件，0為無限制。
+            /// </summary>
+            public int Exception_Limit
+            {
+                get => Settings.Default.Exception_Limit;
+                set
+                {
+                    Settings.Default.Exception_Limit = value;
+                    OnPropertyChanged();
+                }
+            }
 
             public Loop SelectedItem
             {
@@ -94,7 +104,19 @@ namespace WPF.ViewModel
                     new JsonSerializerSettings() { Converters = converters });
 
                 Tasks.ListChanged += SaveConfig;
+                MVVM.Error.PropertyChanged += Error_PropertyChanged;
             }
+
+            private void Error_PropertyChanged(object sender, PropertyChangedEventArgs e)
+            {
+                if (this.Exception_Limit != 0 && e.PropertyName == "Count" &&
+                    MVVM.Error.Count >= this.Exception_Limit)
+                {
+                    Stop();
+                    MVVM.Show($"程序執行期間累計 {MVVM.Error.Count}起例外事件，並終止所有任務。");
+                }
+            }
+
             /// <summary>
             /// 資料變更，並儲存資料
             /// </summary>

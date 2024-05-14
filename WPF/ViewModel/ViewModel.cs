@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using Newtonsoft.Json;
 using WPF.Properties;
+using WPF.ViewModel;
 
 namespace WPF.ViewModel
 {
@@ -25,23 +26,22 @@ namespace WPF.ViewModel
 
 
     }
-
-
-    // --------------------------------------------------------------------------------
-    // 靜態宣告所有介面【共用】物件，像跨界面傳遞值或全域變數的意思。
-
-    /// <summary>
-    /// ViewModel
-    /// </summary>
-    public static class WPF_MVVM
-    {
-        // ViewModel 方式傳遞 
-        public static Mission.Manager Manager = new Mission.Manager();
-
-        public static MQTT MQTT = new MQTT();
-    }
-
 }
+
+// --------------------------------------------------------------------------------
+// 靜態宣告所有介面【共用】物件，像跨界面傳遞值或全域變數的意思。
+
+/// <summary>
+/// ViewModel
+/// </summary>
+public static class WPF_MVVM
+{
+    // ViewModel 方式傳遞 
+    public static Mission.Manager Manager = new Mission.Manager();
+
+    public static MQTT MQTT = new MQTT();
+}
+
 
 /// <summary>
 /// 靜態擴充

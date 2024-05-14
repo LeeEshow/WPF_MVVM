@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WPF.View.Window;
 using WPF.ViewModel;
 
 namespace WPF.View.Controller
@@ -42,5 +43,13 @@ namespace WPF.View.Controller
                 MVVM.ExceptionEvent(MethodBase.GetCurrentMethod(), ex);
             }
         }
+
+        // 子視窗 - MQTT
+        private void MQTT_Setting(object sender, RoutedEventArgs e)
+        {
+            MQTT_Window mqtt = new MQTT_Window();
+            mqtt.ShowOnly();
+        }
+
     }
 }

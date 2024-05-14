@@ -23,7 +23,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn  Header="設定值">
+                    <DataGridTemplateColumn  Header="設定值" Width="100*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBox Text="{Binding Value}" TextChanged="TextBox_TextChanged"

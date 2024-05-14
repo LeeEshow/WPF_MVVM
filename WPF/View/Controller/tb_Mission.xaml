@@ -9,7 +9,12 @@
 
     <Button Style="{StaticResource ToolBar_Button}" Height="25" Click="Button_StartStop"
                 ToolTip="任務執行器" >
-
+        <Button.ContextMenu>
+            <ContextMenu>
+                <MenuItem Header="任務管理器" Click="Button_MissionManager"/>
+            </ContextMenu>
+        </Button.ContextMenu>
+        
         <DockPanel>
             <Image  Width="20" Margin="3,0" Source="{Binding Operate_Image}"/>
             <TextBlock Text="{Binding Operate}" VerticalAlignment="Center" Width="30" Foreground="{StaticResource White}"/>

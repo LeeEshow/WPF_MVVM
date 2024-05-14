@@ -4,7 +4,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:Component="clr-namespace:Component.View.Controller;assembly=Component"      
-    xmlns:local="clr-namespace:WPF" xmlns:viewmodel="clr-namespace:Component.ViewModel;assembly=Component"
+    xmlns:Controller="clr-namespace:WPF.View.Controller" 
     x:Class="WPF.View.Controller.StatusBar"
     mc:Ignorable="d" 
     d:DesignHeight="30" d:DesignWidth="500">
@@ -12,6 +12,7 @@
     <DockPanel>
         <Component:sbi_DBConfig DockPanel.Dock="Left" Margin="5,0" />
         <Border Style="{StaticResource Divider}" />
+        <Controller:sbi_MQTT DockPanel.Dock="Left" Margin="5,0" />
         <Component:sbi_Error DockPanel.Dock="Right" Margin="5,0" MinWidth="60"/>
         <Grid />
     </DockPanel>

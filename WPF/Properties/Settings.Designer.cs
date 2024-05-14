@@ -106,5 +106,17 @@ namespace WPF.Properties {
                 this["MQTT_AutoConnect"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Exception_Limit {
+            get {
+                return ((int)(this["Exception_Limit"]));
+            }
+            set {
+                this["Exception_Limit"] = value;
+            }
+        }
     }
 }

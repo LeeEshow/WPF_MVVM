@@ -255,7 +255,11 @@ namespace TestCode
         // 當外部程序call A.TestA(5) >>> retuen 10%
         // call A.TestB(5) >> retuen 25%
 
-        // 不能變更 TestA/TestB 內部的code為前提
+        // SP惠比壽 + 骰子鬼 / 速抵生 TOP 速度 or HP
+        // SP小鹿男 + 輪入道 / 速抵生 TOP 速度
+        // SP金魚姬 + 鏡姬 / TOP 輸出
+        // 天井下 + 珍珠 / 生生爆
+        // 一速拉條
 
         public int TestA(int value)
         {

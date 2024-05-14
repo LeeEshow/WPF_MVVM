@@ -138,6 +138,9 @@
     <Compile Include="View\Controller\Menu.xaml.cs">
       <DependentUpon>Menu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Controller\sbi_MQTT.xaml.cs">
+      <DependentUpon>sbi_MQTT.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Controller\StatusBar.xaml.cs">
       <DependentUpon>StatusBar.xaml</DependentUpon>
     </Compile>
@@ -162,6 +165,10 @@
     <Compile Include="View\Window\MQTT_Window.xaml.cs">
       <DependentUpon>MQTT_Window.xaml</DependentUpon>
     </Compile>
+    <Page Include="View\Controller\sbi_MQTT.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Controller\StatusBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

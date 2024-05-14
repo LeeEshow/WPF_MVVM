@@ -165,7 +165,10 @@ namespace WPF
 
         private void btn_test1_Click(object sender, RoutedEventArgs e)
         {
-            var data = Settings.Default.GetType().GetProperties();
+            
+
+
+
         }
 
 

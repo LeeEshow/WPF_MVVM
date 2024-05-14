@@ -18,6 +18,9 @@ namespace WPF.View.Window
             InitializeComponent();
             this.DataContext = WPF_MVVM.Manager;
             dg_Data.ItemsSource = WPF_MVVM.Manager.Tasks;
+
+            txt_Limit.IsEnabled = WPF_MVVM.Manager.Exception_Limit != 0 ? true : false;
+            cb_Limit.IsChecked = WPF_MVVM.Manager.Exception_Limit != 0 ? true : false;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -68,6 +71,19 @@ namespace WPF.View.Window
             Mission_Manager_Setting setting = new Mission_Manager_Setting();
             setting.Mission = WPF_MVVM.Manager.SelectedItem;
             setting.ShowDialog();
+        }
+
+        private void CheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            if ((bool)cb_Limit.IsChecked)
+            {
+                txt_Limit.IsEnabled = true;
+            }
+            else
+            {
+                txt_Limit.IsEnabled = false;
+                WPF_MVVM.Manager.Exception_Limit = 0;
+            }
         }
     }
 }

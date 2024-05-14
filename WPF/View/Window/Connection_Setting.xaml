@@ -32,18 +32,18 @@
     <!--#endregion-->
 
     <Grid>
-        <TabControl Style="{StaticResource MahApps.Styles.Control.WindowCommands}" 
-                    Background="{DynamicResource Panel_2}" 
-                    BorderBrush="{StaticResource Panel_2}" Margin="2">
+        <TabControl Margin="0,5,0,0" >
             
             <!--#region Database -->
-            <TabItem Header="SQL Server" Style="{StaticResource conTabItem}" >
-                <Grid x:Name="gri_DB" Margin="0,5,0,0" >
-                    <Component:pan_DBConfig />
+            <TabItem Header="SQL Server" >
+                <Grid x:Name="gri_DB">
+                    <Component:pan_DBConfig Margin="0,5,0,0"/>
                 </Grid>
             </TabItem>
             <!--#endregion-->
-            
+            <TabItem Header="Other" >
+
+            </TabItem>
         </TabControl>
     </Grid>
 </Controls:MetroWindow>

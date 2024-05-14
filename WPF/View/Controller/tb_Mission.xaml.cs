@@ -35,7 +35,5 @@ namespace WPF.View.Controller
             Mission_Manager Manager = new Mission_Manager();
             Manager.ShowOnly();
         }
-
-
     }
 }
