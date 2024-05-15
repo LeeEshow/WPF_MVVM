@@ -78,8 +78,7 @@
                     <Button Content="訂閱" Width="50" HorizontalAlignment="Right" Height="25" Margin="0,0,5,0" 
                             Style="{StaticResource defButton}" Click="Subscribe_Click" />
                 </Grid>
-                <DataGrid x:Name="gd_Topic" Style="{StaticResource MainDataGrid}"
-                          AutoGenerateColumns="False" IsReadOnly="True"
+                <DataGrid x:Name="gd_Topic" AutoGenerateColumns="False" IsReadOnly="True"
                           SelectedItem="{Binding SelectItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <DataGrid.Columns>
                         <DataGridTemplateColumn  Header="顯示訊息">

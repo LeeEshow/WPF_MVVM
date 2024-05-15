@@ -42,7 +42,7 @@ namespace WPF.View.Window
             }
         }
 
-        #region 重整 Topic 清單事件
+        #region List/Text Changed
         private delegate void ListChangedCallBack(object sender, ListChangedEventArgs e);
         private void Topics_ListChanged(object sender, ListChangedEventArgs e)
         {
@@ -76,7 +76,23 @@ namespace WPF.View.Window
                 MVVM.ExceptionEvent(MethodBase.GetCurrentMethod(), ex);
             }
         }
-        #endregion 重整 Topic 清單事件
+
+        private void RichTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            try
+            {
+                rtb_msage.ScrollToEnd();
+                if (txt_MQTTMessage != null)
+                {
+                    while (txt_MQTTMessage.Inlines.Count > 200)
+                    {
+                        txt_MQTTMessage.Inlines.Remove(txt_MQTTMessage.Inlines.FirstInline);
+                    }
+                }
+            }
+            catch { }
+        }
+        #endregion List/Text Changed
 
         #region Topic 處理
         // 訂閱頻道
@@ -155,23 +171,6 @@ namespace WPF.View.Window
         {
             ShowMessage(DateTime.Now, Message);
         }
-        private void RichTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
-        {
-            try
-            {
-                rtb_msage.ScrollToEnd();
-                if (txt_MQTTMessage != null)
-                {
-                    while(txt_MQTTMessage.Inlines.Count > 200)
-                    {
-                        txt_MQTTMessage.Inlines.Remove(txt_MQTTMessage.Inlines.FirstInline);
-                    }
-                }
-            }
-            catch { }
-        }
-
-        // 連線狀態管理驅動 Topic List UI / 下拉選單
         private void MQTT_StatusChanged(ToolBox.Common.MQTT.MQTT_ConnectStatus Status, string Message)
         {
             try
@@ -183,6 +182,7 @@ namespace WPF.View.Window
                 MVVM.ExceptionEvent(MethodBase.GetCurrentMethod(), ex);
             }
         }
+
         // 委派畫面顯示 MQTT 訊息
         private delegate void MQTTMessageCallBack(DateTime DateTime, ToolBox.Common.MQTT.MQTT_Message Message);
         private void ShowMessage(DateTime DateTime, ToolBox.Common.MQTT.MQTT_Message Message)

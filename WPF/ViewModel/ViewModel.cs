@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Windows;
 using Newtonsoft.Json;
 using WPF.Properties;
@@ -23,16 +24,12 @@ namespace WPF.ViewModel
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-
     }
 }
 
 // --------------------------------------------------------------------------------
-// 靜態宣告所有介面【共用】物件，像跨界面傳遞值或全域變數的意思。
-
 /// <summary>
-/// ViewModel
+/// 靜態宣告所有介面【共用】物件，像跨界面傳遞值或全域變數的意思。
 /// </summary>
 public static class WPF_MVVM
 {
@@ -40,9 +37,11 @@ public static class WPF_MVVM
     public static Mission.Manager Manager = new Mission.Manager();
 
     public static MQTT MQTT = new MQTT();
+
 }
 
 
+// --------------------------------------------------------------------------------
 /// <summary>
 /// 靜態擴充
 /// </summary>
@@ -70,3 +69,36 @@ public static class ExtensionMethods
     }
 
 }
+
+
+// --------------------------------------------------------------------------------
+namespace WPF.Properties
+{
+    internal sealed partial class Settings
+    {
+
+        public Settings()
+        {
+            this.SettingChanging += this.SettingChangingEventHandler;
+        }
+
+        private void SettingChangingEventHandler(object sender, System.Configuration.SettingChangingEventArgs e)
+        {
+            try
+            {
+                _ = Task.Run(() =>
+                {
+                    lock (Default)
+                    {
+                        Default.Save();
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                MVVM.ExceptionEvent(MethodBase.GetCurrentMethod(), ex);
+            }
+        }
+    }
+}
+

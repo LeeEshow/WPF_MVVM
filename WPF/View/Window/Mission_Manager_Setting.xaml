@@ -13,7 +13,7 @@
 
     <DockPanel>
         <Grid DockPanel.Dock="Top" ScrollViewer.VerticalScrollBarVisibility="Visible">
-            <DataGrid x:Name="dg_Data" Style="{StaticResource MainDataGrid}" AutoGenerateColumns="False" CanUserAddRows="False"
+            <DataGrid x:Name="dg_Data" AutoGenerateColumns="False" CanUserAddRows="False"
                   SelectedItem="{Binding Item, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn>

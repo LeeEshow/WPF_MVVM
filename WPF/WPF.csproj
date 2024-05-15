@@ -129,7 +129,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Settings.cs" />
     <Compile Include="Test.cs" />
     <Compile Include="ViewModel\Mission.cs" />
     <Compile Include="ViewModel\Mission_MoveFile.cs" />

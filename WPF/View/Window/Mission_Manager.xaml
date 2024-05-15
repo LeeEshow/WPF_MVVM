@@ -25,8 +25,7 @@
         
         <!--#region DataGrid -->
         <Grid ScrollViewer.VerticalScrollBarVisibility="Visible">
-            <DataGrid DockPanel.Dock="Top" x:Name="dg_Data" Style="{StaticResource MainDataGrid}" 
-                  AutoGenerateColumns="False" IsReadOnly="True"
+            <DataGrid DockPanel.Dock="Top" x:Name="dg_Data" AutoGenerateColumns="False" IsReadOnly="True" BorderThickness="0"
                   SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn  Header="Mission">
