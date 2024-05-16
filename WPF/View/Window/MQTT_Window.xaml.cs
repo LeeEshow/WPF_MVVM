@@ -104,11 +104,7 @@ namespace WPF.View.Window
                 {
                     if (WPF_MVVM.MQTT.Topics.ToList().Find(x => x.Topic == txt_Subscribe.Text) == null)
                     {
-                        WPF_MVVM.MQTT.Subscribe(new string[] { txt_Subscribe.Text });
-                        if (WPF_MVVM.MQTT.IsConnected)
-                        {
-                            MVVM.Show($"Subscribe Topic：{txt_Subscribe.Text}");
-                        }
+                        _ = WPF_MVVM.MQTT.Subscribe(txt_Subscribe.Text);
                     }
                     txt_Subscribe.Text = "";
                 }
@@ -128,18 +124,14 @@ namespace WPF.View.Window
 
         // 取消訂閱
         public MQTT_Topic SelectItem { get; set; }
-        private void Unsubscribe_Click(object sender, RoutedEventArgs e)
+        async private void Unsubscribe_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 if (SelectItem != null)
                 {
                     string str = SelectItem.Topic;
-                    WPF_MVVM.MQTT.Unsubscribe(new string[] { str });
-                    if (WPF_MVVM.MQTT.IsConnected)
-                    {
-                        MVVM.Show($"Unsubscribe Topic：{ str }");
-                    }
+                    _ = await WPF_MVVM.MQTT.Unsubscribe(str);
                 }
             }
             catch (Exception ex)
@@ -195,9 +187,13 @@ namespace WPF.View.Window
             else
             {
                 #region 訊息前處理
-                if (!WPF_MVVM.MQTT.Topics.ToList().Find(x => x.Topic == Message.Topic).ShowMessage)
+                var topic = WPF_MVVM.MQTT.Topics.ToList().Find(x => x.Topic == Message.Topic);
+                if (topic != null)
                 {
-                    return;
+                    if (!topic.ShowMessage)
+                    {
+                        return;
+                    }
                 }
                 #endregion 訊息前處理
 
@@ -227,6 +223,10 @@ namespace WPF.View.Window
             try
             {
                 WPF_MVVM.MQTT.Connect();
+                if (WPF_MVVM.MQTT.Topics.ToList().Find(x => x.Topic == WPF_MVVM.MQTT.ID) == null)
+                {
+                    _ = WPF_MVVM.MQTT.Subscribe(WPF_MVVM.MQTT.ID);
+                }
             }
             catch (Exception ex)
             {

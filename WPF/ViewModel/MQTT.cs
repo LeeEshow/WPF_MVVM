@@ -10,6 +10,7 @@ using ToolBox.ExtensionMethods;
 using WPF.Properties;
 using Client = ToolBox.Common.MQTT.Client;
 using Newtonsoft.Json;
+using System.Windows;
 
 namespace WPF.ViewModel
 {
@@ -159,62 +160,80 @@ namespace WPF.ViewModel
         /// 訂閱頻道
         /// </summary>
         /// <param name="Topic"></param>
-        public override void Subscribe(string[] Topic)
+        async public override Task<bool> Subscribe(string Topic)
         {
-            base.Subscribe(Topic);
-            foreach (var item in Topic)
+            var data = Topics_.ToList().Find(x => x.Topic == Topic);
+            if (data == null)
             {
-                if (Topics_.ToList().Find(x => x.Topic == item) == null)
+                Topics_.Add(new MQTT_Topic
                 {
-                    Topics_.Add(new MQTT_Topic
+                    ShowMessage = true,
+                    Topic = Topic,
+                    ToMainWindow = false
+                });
+            }
+
+            if (IsConnected)
+            {
+                if (await base.Subscribe(Topic))
+                {
+                    MVVM.Show($"Subscribe Topic：{Topic}");
+                }
+                else
+                {
+                    data = Topics_.ToList().Find(x => x.Topic == Topic);
+                    Application.Current?.Dispatcher.InvokeAsync(() =>
                     {
-                        ShowMessage = true,
-                        Topic = item,
-                        ToMainWindow = false
+                        Topics_.Remove(data);
                     });
                 }
             }
+            return true;
         }
         /// <summary>
         /// 取消訂閱頻道
         /// </summary>
         /// <param name="Topic"></param>
-        public override void Unsubscribe(string[] Topic)
+        async public override Task<bool> Unsubscribe(string Topic)
         {
-            foreach (var item in Topic)
+            var data = Topics_.ToList().Find(x => x.Topic == Topic);
+            if (data != null)
             {
-                var data = Topics_.ToList().Find(x => x.Topic == item);
-                if (data != null)
+                if (IsConnected)
                 {
-                    base.Unsubscribe(new string[] { item });
-                    Topics_.Remove(data);
+                    MVVM.Show($"Unsubscribe Topic：{ Topic }");
+                    await base.Unsubscribe(Topic);
                 }
+
+                Application.Current?.Dispatcher.InvokeAsync(() =>
+                {
+                    Topics_.Remove(data);
+                });
             }
+            return true;
         }
 
         /// <summary>
         /// 連線
         /// </summary>
-        public new void Connect()
+        async public new void Connect()
         {
             if (!this.IsConnected)
             {
-                if (!string.IsNullOrEmpty(this.Broker_IP) &&
-                    !string.IsNullOrEmpty(this.ID))
+                if (!string.IsNullOrEmpty(this.Broker_IP) && !string.IsNullOrEmpty(this.ID))
                 {
-                    base.Connect();
-                    this.Subscribe(new string[] { this.ID });
+                    await base.Connect();
                 }
             }
             else
             {
-                base.Disconnect();
+                await base.Disconnect();
             }
         }
         #endregion 行為
 
         #region Event
-        private void MQTT_StatusChanged(ToolBox.Common.MQTT.MQTT_ConnectStatus Status, string Message)
+        async private void MQTT_StatusChanged(ToolBox.Common.MQTT.MQTT_ConnectStatus Status, string Message)
         {
             if (Status == ToolBox.Common.MQTT.MQTT_ConnectStatus.Connected)
             {
@@ -223,10 +242,9 @@ namespace WPF.ViewModel
                 Signal = MVVM.Resources["Green"];
 
                 MVVM.Show("MQTT is Connected");
-                this.Subscribe(WPF_MVVM.MQTT.Topics.Select(x => x.Topic).ToArray());
                 foreach (var item in WPF_MVVM.MQTT.Topics)
                 {
-                    MVVM.Show($"Subscribe Topic：{item.Topic}");
+                    await this.Subscribe(item.Topic);
                 }
             }
             else
@@ -242,9 +260,13 @@ namespace WPF.ViewModel
 
         private void MQTT_MessageReceived(ToolBox.Common.MQTT.MQTT_Message Message)
         {
-            if (this.Topics.ToList().Find(x => x.Topic == Message.Topic).ToMainWindow)
+            var topic = this.Topics.ToList().Find(x => x.Topic == Message.Topic);
+            if (topic != null)
             {
-                MVVM.Show($"MQTT Message：{Message.Content}");
+                if (topic.ToMainWindow)
+                {
+                    MVVM.Show($"MQTT Message：{Message.Content}");
+                }
             }
 
             Messages.Add(new MQTT_Message

@@ -54,7 +54,7 @@ namespace WPF
         }
 
         #region 事件宣告
-        private void Default_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void Default_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             try
             {

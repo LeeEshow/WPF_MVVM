@@ -13,14 +13,14 @@
             <ContextMenu>
                 <MenuItem Header="MQTT" Click="MQTT_Setting">
                     <MenuItem.Icon>
-                        <Image Width="20" Source="/WPF;component/Image/MQTT.png" Margin="10,0,5,0"/>
+                        <Image Height="20" Source="/WPF;component/Image/MQTT.png" Margin="10,0,5,0"/>
                     </MenuItem.Icon>
                 </MenuItem>
             </ContextMenu>
         </Button.ContextMenu>
 
         <DockPanel Margin="5,0">
-            <Image Source="{Binding Operate_Image}" Margin="0,0,5,0" />
+            <Image Source="{Binding Operate_Image}" Margin="0,0,5,0" Height="18"/>
             <TextBlock Text="{Binding Operate}" Foreground="{StaticResource White}" 
                            VerticalAlignment="Center" HorizontalAlignment="Left"/>
         </DockPanel>

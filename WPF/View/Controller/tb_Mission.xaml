@@ -16,7 +16,7 @@
         </Button.ContextMenu>
         
         <DockPanel>
-            <Image  Width="20" Margin="3,0" Source="{Binding Operate_Image}"/>
+            <Image  Height="18" Margin="3,0" Source="{Binding Operate_Image}"/>
             <TextBlock Text="{Binding Operate}" VerticalAlignment="Center" Width="30" Foreground="{StaticResource White}"/>
             <mah:Badged Badge="{Binding Tasks_Count}" Margin="8,0,0,0"/>
         </DockPanel>

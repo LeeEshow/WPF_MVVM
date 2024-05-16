@@ -69,36 +69,3 @@ public static class ExtensionMethods
     }
 
 }
-
-
-// --------------------------------------------------------------------------------
-namespace WPF.Properties
-{
-    internal sealed partial class Settings
-    {
-
-        public Settings()
-        {
-            this.SettingChanging += this.SettingChangingEventHandler;
-        }
-
-        private void SettingChangingEventHandler(object sender, System.Configuration.SettingChangingEventArgs e)
-        {
-            try
-            {
-                _ = Task.Run(() =>
-                {
-                    lock (Default)
-                    {
-                        Default.Save();
-                    }
-                });
-            }
-            catch (Exception ex)
-            {
-                MVVM.ExceptionEvent(MethodBase.GetCurrentMethod(), ex);
-            }
-        }
-    }
-}
-

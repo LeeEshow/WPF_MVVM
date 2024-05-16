@@ -20,6 +20,14 @@
     </Controls:MetroWindow.LeftWindowCommands>
     <!--#endregion-->
 
+    <!--#region 視窗框 右邊內容 -->
+    <Controls:MetroWindow.RightWindowCommands>
+        <Controls:WindowCommands>
+            <Controller:sbi_MQTT />
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.RightWindowCommands>
+    <!--#endregion-->
+
     <Controls:MetroWindow.Resources>
         <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource defTextBlock}">
             <Setter Property="Width" Value="50"/>
