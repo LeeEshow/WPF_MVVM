@@ -124,14 +124,14 @@ namespace WPF.View.Window
 
         // 取消訂閱
         public MQTT_Topic SelectItem { get; set; }
-        async private void Unsubscribe_Click(object sender, RoutedEventArgs e)
+        private void Unsubscribe_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 if (SelectItem != null)
                 {
                     string str = SelectItem.Topic;
-                    _ = await WPF_MVVM.MQTT.Unsubscribe(str);
+                    _ =  WPF_MVVM.MQTT.Unsubscribe(str);
                 }
             }
             catch (Exception ex)
@@ -187,7 +187,7 @@ namespace WPF.View.Window
             else
             {
                 #region 訊息前處理
-                var topic = WPF_MVVM.MQTT.Topics.ToList().Find(x => x.Topic == Message.Topic);
+                var topic = WPF_MVVM.MQTT.MatchTopic(Message.Topic); ;
                 if (topic != null)
                 {
                     if (!topic.ShowMessage)
@@ -239,8 +239,7 @@ namespace WPF.View.Window
     public class BoolToOppositeBoolConverter : IValueConverter
     {
         #region IValueConverter Members
-        public object Convert(object value, Type targetType, object parameter,
-            System.Globalization.CultureInfo culture)
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             if (targetType != typeof(bool))
                 throw new InvalidOperationException("The target must be a boolean");
@@ -248,8 +247,7 @@ namespace WPF.View.Window
             return !(bool)value;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter,
-            System.Globalization.CultureInfo culture)
+        public object ConvertBack(object value, Type targetType, object parameter,  System.Globalization.CultureInfo culture)
         {
             throw new NotSupportedException();
         }

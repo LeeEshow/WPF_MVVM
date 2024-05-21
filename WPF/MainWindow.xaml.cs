@@ -19,6 +19,11 @@ using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json.Linq;
 using WPF.ViewModel;
 using WPF.View.Window;
+using System.Data;
+using System.IO;
+using System.Xml.Serialization;
+using System.Text;
+using System.Xml;
 
 namespace WPF
 {
@@ -27,6 +32,7 @@ namespace WPF
     /// </summary>
     public partial class MainWindow : MetroWindow
     {
+        #region 初始化
         /// <summary>
         /// 起始程序
         /// </summary>
@@ -52,6 +58,7 @@ namespace WPF
             ToolBox.Event.ToolException += MVVM.ExceptionEvent;
             API.Base.APIException += MVVM.ExceptionEvent;
         }
+        #endregion 初始化
 
         #region 事件宣告
         private void Default_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -159,22 +166,16 @@ namespace WPF
         }
         #endregion Windows 事件
 
-
         // ---------------------------------------------------------------------------------------
-        // Test
         private void btn_test1_Click(object sender, RoutedEventArgs e)
         {
-            
-
-
 
         }
 
-
-
         private void btn_test2_Click(object sender, RoutedEventArgs e)
         {
-            
+
+
         }
 
     }

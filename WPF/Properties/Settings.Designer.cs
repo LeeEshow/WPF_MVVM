@@ -118,5 +118,29 @@ namespace WPF.Properties {
                 this["Exception_Limit"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("[]")]
+        public string TSQL_List {
+            get {
+                return ((string)(this["TSQL_List"]));
+            }
+            set {
+                this["TSQL_List"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("[]")]
+        public string MSSQL_List {
+            get {
+                return ((string)(this["MSSQL_List"]));
+            }
+            set {
+                this["MSSQL_List"] = value;
+            }
+        }
     }
 }

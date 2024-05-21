@@ -255,6 +255,8 @@ namespace TestCode
         // 當外部程序call A.TestA(5) >>> retuen 10%
         // call A.TestB(5) >> retuen 25%
 
+        // 荒 + 川 + 白蛇 + 輝葉 + 瀧
+
         public int TestA(int value)
         {
             return value * 2;

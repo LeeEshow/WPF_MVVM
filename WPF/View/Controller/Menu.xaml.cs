@@ -21,12 +21,11 @@ namespace WPF.View.Controller
             mi_Mission_Manager.DataContext = WPF_MVVM.Manager;
         }
 
-        // 子視窗 - 連線設定
+        // 子視窗 - SQL Server
         private void Connecting_Setting(object sender, RoutedEventArgs e)
         {
-            Connection_Setting Setting = new Connection_Setting();
-            Setting.Title = "設定後請測試連線";
-            Setting.ShowDialog();
+            SQL_Window window = new SQL_Window();
+            window.ShowOnly();
         }
 
         // 子視窗 - FTP

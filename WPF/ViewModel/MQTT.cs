@@ -155,7 +155,6 @@ namespace WPF.ViewModel
             Settings.Default.MQTT_Topic = this.Topics_.ToJsonString();
         }
 
-
         /// <summary>
         /// 訂閱頻道
         /// </summary>
@@ -260,7 +259,7 @@ namespace WPF.ViewModel
 
         private void MQTT_MessageReceived(ToolBox.Common.MQTT.MQTT_Message Message)
         {
-            var topic = this.Topics.ToList().Find(x => x.Topic == Message.Topic);
+            var topic = MatchTopic(Message.Topic);
             if (topic != null)
             {
                 if (topic.ToMainWindow)
@@ -279,6 +278,75 @@ namespace WPF.ViewModel
             {
                 Messages.RemoveAt(0);
             }
+        }
+
+        /// <summary>
+        /// 演算法，匹配訊息來源頻道與訂閱清單。
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public MQTT_Topic MatchTopic(string str)
+        {
+            var topic = this.Topics.ToList().Find(x => x.Topic == str);
+            if (topic != null)
+            {
+                return topic;
+            }
+            else
+            {
+                foreach (var item in this.Topics.ToList().FindAll(x => x.Topic.Contains("#")))
+                {
+                    if (IsMatch(str, item.Topic))
+                    {
+                        return item;
+                    }
+                }
+            }
+            return null;
+        }
+        private static bool IsMatch(string text, string pattern)
+        {
+            int textIndex = 0;
+            int patternIndex = 0;
+            int asteriskIndex = -1;
+
+            while (textIndex < text.Count())
+            {
+                bool isEndOfPattern = patternIndex == pattern.Count();
+                if (!isEndOfPattern && IsTextEqualPatternOrQuestionMark(text[textIndex], pattern[patternIndex]))
+                {
+                    textIndex++;
+                    patternIndex++;
+                }
+
+                else if (!isEndOfPattern && pattern[patternIndex] == '#')
+                {
+                    asteriskIndex = patternIndex;
+                    patternIndex += 1;
+                }
+
+                else if (asteriskIndex != -1) // 表示前面有出現過 *
+                {
+                    patternIndex = asteriskIndex + 1;
+                    textIndex += 1;
+                    continue;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            while (patternIndex < pattern.Count() && pattern[patternIndex] == '#')
+                patternIndex++;
+
+            return patternIndex == pattern.Count();
+        }
+        private static bool IsTextEqualPatternOrQuestionMark(char character, char pattern)
+        {
+            if (character == pattern || pattern == '?')
+                return true;
+            return false;
         }
         #endregion Event
     }

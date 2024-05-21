@@ -1,0 +1,57 @@
+﻿<Controls:MetroWindow 
+    x:Class="WPF.View.Window.SQL_Config"
+    xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Component="clr-namespace:Component.View.Controller;assembly=Component"
+    mc:Ignorable="d"
+    Title="SQL Server 連線設定" Height="230" Width="300"
+    WindowTitleBrush="{StaticResource OuterFrame}" BorderBrush="{StaticResource FocusForm}"
+    Background="{DynamicResource Panel_2}" WindowStartupLocation="CenterScreen">
+    
+    <Controls:MetroWindow.Resources>
+        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource defTextBlock}">
+            <Setter Property="Width" Value="80"/>
+            <Setter Property="TextAlignment" Value="Right" />
+        </Style>
+        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource defTextBox}">
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="Margin" Value="5,0"/>
+        </Style>
+    </Controls:MetroWindow.Resources>
+    
+    <DockPanel KeyDown="DockPanel_KeyDown">
+        <DockPanel DockPanel.Dock="Top" Margin="0,10,0,0">
+            <TextBlock Text="Server IP" DockPanel.Dock="Left"/>
+            <TextBox Text="{Binding IP, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Left" />
+            <Grid/>
+        </DockPanel>
+        <DockPanel DockPanel.Dock="Top" Margin="0,5,0,0">
+            <TextBlock Text="User ID" DockPanel.Dock="Left"/>
+            <TextBox Text="{Binding User, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Left" />
+            <Grid/>
+        </DockPanel>
+        <DockPanel DockPanel.Dock="Top" Margin="0,5,0,0">
+            <TextBlock Text="Password" DockPanel.Dock="Left"/>
+            <PasswordBox DockPanel.Dock="Left" Style="{StaticResource defPasswordBox}" 
+                         Width="150" Margin="5,0"
+                         Component:PasswordHelper.Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Grid/>
+        </DockPanel>
+        <DockPanel DockPanel.Dock="Top" Margin="0,5,0,0">
+            <TextBlock Text="Schema" DockPanel.Dock="Left"/>
+            <TextBox Text="{Binding def_Schema, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Left" />
+            <Grid/>
+        </DockPanel>
+        <Grid>
+            <TextBlock Text="{Binding Connect_Result}" HorizontalAlignment="Right" 
+                       VerticalAlignment="Bottom" Margin="0,0,120,20" />
+            <Button HorizontalAlignment="Right" VerticalAlignment="Bottom" 
+                    Style="{StaticResource defButton}"
+                    Margin="0,0,10,10" Width="100" Height="30" Content="儲存並關閉" 
+                    Click="Test_Click"/>
+        </Grid>
+    </DockPanel>
+</Controls:MetroWindow>

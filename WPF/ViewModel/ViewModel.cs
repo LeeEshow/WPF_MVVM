@@ -33,10 +33,13 @@ namespace WPF.ViewModel
 /// </summary>
 public static class WPF_MVVM
 {
-    // ViewModel 方式傳遞 
     public static Mission.Manager Manager = new Mission.Manager();
 
     public static MQTT MQTT = new MQTT();
+
+    public static MSSQL_List MSSQLs = new MSSQL_List();
+
+    public static TSQL_List TSQLs = new TSQL_List();
 
 }
 
@@ -69,3 +72,4 @@ public static class ExtensionMethods
     }
 
 }
+    

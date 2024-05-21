@@ -13,8 +13,8 @@
     <DockPanel>
         <!-- 左側選單列 -->
         <Menu DockPanel.Dock="Left" VerticalAlignment="Center" Background="{x:Null}">
-            <MenuItem Header="Setup" Style="{StaticResource Menu_Header}">
-                <MenuItem Header="資料庫設定" Click="Connecting_Setting" >
+            <MenuItem Header="Tool" Style="{StaticResource Menu_Header}">
+                <MenuItem Header="SQL Server" Click="Connecting_Setting" >
                     <MenuItem.Icon>
                         <Image Width="20" Source="/WPF;component/Image/server.png" Margin="10,0,5,0"/>
                     </MenuItem.Icon>

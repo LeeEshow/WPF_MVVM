@@ -133,6 +133,7 @@
     <Compile Include="ViewModel\Mission.cs" />
     <Compile Include="ViewModel\Mission_MoveFile.cs" />
     <Compile Include="ViewModel\MQTT.cs" />
+    <Compile Include="ViewModel\SQL.cs" />
     <Compile Include="ViewModel\ViewModel.cs" />
     <Compile Include="View\Controller\Menu.xaml.cs">
       <DependentUpon>Menu.xaml</DependentUpon>
@@ -149,9 +150,6 @@
     <Compile Include="View\Controller\tb_MQTT.xaml.cs">
       <DependentUpon>tb_MQTT.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Window\Connection_Setting.xaml.cs">
-      <DependentUpon>Connection_Setting.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\Window\FTP.xaml.cs">
       <DependentUpon>FTP.xaml</DependentUpon>
     </Compile>
@@ -163,6 +161,12 @@
     </Compile>
     <Compile Include="View\Window\MQTT_Window.xaml.cs">
       <DependentUpon>MQTT_Window.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Window\SQL_Config.xaml.cs">
+      <DependentUpon>SQL_Config.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Window\SQL_Window.xaml.cs">
+      <DependentUpon>SQL_Window.xaml</DependentUpon>
     </Compile>
     <Page Include="View\Controller\sbi_MQTT.xaml">
       <SubType>Designer</SubType>
@@ -196,10 +200,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Window\Connection_Setting.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\Window\FTP.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -213,6 +213,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Window\MQTT_Window.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Window\SQL_Config.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Window\SQL_Window.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -275,6 +283,25 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Image\server.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\assignment_add.png" />
+    <Resource Include="Image\flash_on.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\settings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\close.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

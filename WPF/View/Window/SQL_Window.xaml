@@ -1,0 +1,157 @@
+﻿<Controls:MetroWindow 
+    x:Class="WPF.View.Window.SQL_Window"
+    xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Component="clr-namespace:Component.View.Controller;assembly=Component"
+    xmlns:local="clr-namespace:WPF.View.Window"
+    mc:Ignorable="d"
+    Title="簡易版 SQL 操作面板" Height="600" Width="1000"
+    WindowTitleBrush="{StaticResource OuterFrame}" BorderBrush="{StaticResource FocusForm}"
+    Background="{DynamicResource Panel_1}" WindowStartupLocation="CenterScreen" Loaded="MetroWindow_Loaded" >
+
+    <Controls:MetroWindow.Resources>
+        <Style TargetType="TextBlock" BasedOn="{StaticResource defTextBlock}"/>
+
+        <!-- TreeView -->
+        <DataTemplate x:Key="Table">
+            <TextBlock Text="{Binding Name}">
+                <TextBlock.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Select Top 1000" Click="Select1000_Click"/>
+                    </ContextMenu>
+                </TextBlock.ContextMenu>
+            </TextBlock>
+        </DataTemplate>
+        <HierarchicalDataTemplate x:Key="Schema" ItemTemplate="{StaticResource Table}" ItemsSource="{Binding Tables}">
+            <TextBlock Text="{Binding Name}" />
+        </HierarchicalDataTemplate>
+        <HierarchicalDataTemplate x:Key="MSSQL" ItemTemplate="{StaticResource Schema}" ItemsSource="{Binding Schemas}">
+            <DockPanel ToolTip="{Binding IP}">
+                <Image DockPanel.Dock="Left" Source="/WPF;component/Image/server.png" Width="18"/>
+                <TextBlock DockPanel.Dock="Left" Text="{Binding IP}" VerticalAlignment="Center" Margin="5,0"/>
+                <Button DockPanel.Dock="Left" Style="{StaticResource ImageButton}" Margin="0,0,5,0"
+                        Click="Edit_SQL_Click">
+                    <Image Source="/WPF;component/Image/settings.png" Width="18"/>
+                </Button>
+                <Button DockPanel.Dock="Left" Style="{StaticResource ImageButton}" Margin="0,0,5,0"
+                        Click="Refresh_Click">
+                    <Image Source="/WPF;component/Image/refresh.png" Width="18"/>
+                </Button>
+                <Button DockPanel.Dock="Right" Style="{StaticResource ImageButton}" Margin="0,0,5,0"
+                        Click="Delete_SQL_Click">
+                    <Image Source="/WPF;component/Image/close.png" Width="18"/>
+                </Button>
+                <Grid />
+            </DockPanel>
+        </HierarchicalDataTemplate>
+    </Controls:MetroWindow.Resources>
+    
+    <DockPanel>
+        <!-- ToolBar -->
+        <DockPanel DockPanel.Dock="Top" Background="{StaticResource Panel_2}">
+            <Button DockPanel.Dock="Left" Margin="10,3,5,3" Style="{StaticResource ToolBar_Button}" 
+                    Height="25" Click="Add_TSQL_Click">
+                <DockPanel>
+                    <Image Source="/WPF;component/Image/assignment_add.png" Width="18" />
+                    <TextBlock Text="New Query" Style="{StaticResource defTextBlock}" Margin="5,0"/>
+                </DockPanel>
+            </Button>
+            <Border Style="{StaticResource Divider}"/>
+            <Button DockPanel.Dock="Left" Margin="5,3" Style="{StaticResource ToolBar_Button}" 
+                    Height="25" Click="Execute_TSQL_Click">
+                <DockPanel>
+                    <Image Source="/WPF;component/Image/flash_on.png" Width="18" />
+                    <TextBlock Text="執行 (F5)" Style="{StaticResource defTextBlock}" Margin="0,0,5,0"/>
+                </DockPanel>
+            </Button>
+            <Grid />
+        </DockPanel>
+        <!-- 操作面板 -->
+        <Grid KeyUp="Execute_KeyUp" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.25*" />
+                <ColumnDefinition Width="3" />
+                <ColumnDefinition Width="0.75*" />
+            </Grid.ColumnDefinitions>
+            <!-- 左邊 -->
+            <DockPanel Grid.Column="0" Margin="3,3,0,3">
+                <DockPanel DockPanel.Dock="Top" Background="{StaticResource Panel_2}" Height="30">
+                    <Button DockPanel.Dock="Right" Style="{StaticResource ToolBar_Button}" Margin="0,0,5,0" 
+                            Height="25" Click="Add_SQL_Click">
+                        <DockPanel>
+                            <Image Source="/WPF;component/Image/add.png" Width="18"/>
+                            <TextBlock Text="新增" Margin="0,0,5,0"/>
+                        </DockPanel>
+                    </Button>
+                    <Grid>
+                        <TextBlock Text="伺服器管理" HorizontalAlignment="Center" FontSize="14"/>
+                    </Grid>
+                </DockPanel>
+                <DockPanel Background="{StaticResource Panel_2}">
+                    <TreeView x:Name="tv_Server" Margin="1" Background="{StaticResource Gray}" 
+                              ItemTemplate="{StaticResource MSSQL}" Style="{StaticResource MahApps.Styles.TreeView}"
+                              TreeViewItem.Selected="tv_Server_Selected">
+                        <TreeView.ItemContainerStyle>
+                            <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource MahApps.Styles.TreeViewItem}">
+                                <EventSetter Event="ContextMenuOpening" Handler="TreeViewItem_ContextMenuOpening" />
+                            </Style>
+                        </TreeView.ItemContainerStyle>
+                    </TreeView>
+                </DockPanel>
+            </DockPanel>
+            <GridSplitter Grid.Column="1" HorizontalAlignment="Stretch" Background="{DynamicResource Panel_1}"/>
+            <!-- 右邊 -->
+            <Grid Grid.Column="2" Margin="0,3,3,3">
+                <TabControl x:Name="tab_SQL" SelectedItem="{Binding SelectItem}">
+                    <TabControl.ItemTemplate>
+                        <!-- this is the header template-->
+                        <DataTemplate>
+                            <DockPanel>
+                                <TextBlock Text="{Binding Title}" />
+                                <Button Style="{StaticResource ImageButton}" Margin="5,0,0,0" 
+                                Click="Delete_TSQL_Click" ToolTip="{Binding UID}">
+                                    <Image Source="/WPF;component/Image/delete.png" Width="15" />
+                                </Button>
+                                <Grid/>
+                            </DockPanel>
+                        </DataTemplate>
+                    </TabControl.ItemTemplate>
+                    <TabControl.ContentTemplate>
+                        <!-- this is the body of the TabItem template-->
+                        <DataTemplate>
+                            <DockPanel>
+                                <DockPanel DockPanel.Dock="Bottom" Margin="5">
+                                    <TextBlock DockPanel.Dock="Left" Text="【" Style="{StaticResource defTextBlock}" Foreground="{StaticResource Gray}"/>
+                                    <TextBlock DockPanel.Dock="Left" Text="{Binding DateTime}" Style="{StaticResource defTextBlock}" Foreground="{StaticResource Gray}"/>
+                                    <TextBlock DockPanel.Dock="Left" Text="】" Style="{StaticResource defTextBlock}" Foreground="{StaticResource Gray}"/>
+                                    <TextBlock DockPanel.Dock="Left" Text="{Binding Execute_Results}" Style="{StaticResource defTextBlock}" Margin="5,0,0,0"/>
+                                    <Component:sbi_DBConfig DockPanel.Dock="Right"/>
+                                    <Grid />
+                                </DockPanel>
+                                <Grid Background="{StaticResource Panel_2}">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="0.4*" />
+                                        <RowDefinition Height="3" />
+                                        <RowDefinition Height="0.6*" />
+                                    </Grid.RowDefinitions>
+                                    <Grid DockPanel.Dock="Bottom" Grid.Row="0">
+                                        <TextBox Text="{Binding T_SQL, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                         Style="{StaticResource defTextArea}" Margin="5,5,5,0" FontFamily="Consolas" FontSize="13"/>
+                                    </Grid>
+                                    <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" Background="{DynamicResource Panel_2}"/>
+                                    <Grid DockPanel.Dock="Bottom" Background="{StaticResource Panel_2}" Grid.Row="2">
+                                        <DataGrid ItemsSource="{Binding Data}" AutoGenerateColumns="True" IsReadOnly="True" Margin="5,0">
+                                        </DataGrid>
+                                    </Grid>
+                                </Grid>
+                            </DockPanel>
+                        </DataTemplate>
+                    </TabControl.ContentTemplate>
+                </TabControl>
+            </Grid>
+        </Grid>
+    </DockPanel>
+</Controls:MetroWindow>
