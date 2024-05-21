@@ -1,19 +1,9 @@
 ﻿using MahApps.Metro.Controls;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using WPF.ViewModel;
 
 namespace WPF.View.Window
 {
@@ -32,7 +22,7 @@ namespace WPF.View.Window
         {
             try
             {
-                if (!WPF_MVVM.MSSQLs.ToList().Contains(WPF_MVVM.MSSQLs.EditItem))
+                if (!WPF_MVVM.MSSQLs.ToList().Select(x=>x.IP).ToList().Contains(WPF_MVVM.MSSQLs.EditItem.IP))
                 {
                     WPF_MVVM.MSSQLs.Add(WPF_MVVM.MSSQLs.EditItem);
                 }

@@ -9,7 +9,7 @@
     xmlns:local="clr-namespace:WPF.View.Window"
     mc:Ignorable="d"
     Title="簡易版 SQL 操作面板" Height="600" Width="1000"
-    WindowTitleBrush="{StaticResource OuterFrame}" BorderBrush="{StaticResource FocusForm}"
+    WindowTitleBrush="{StaticResource OuterFrame}" BorderBrush="{StaticResource Panel_3}"
     Background="{DynamicResource Panel_1}" WindowStartupLocation="CenterScreen" Loaded="MetroWindow_Loaded" >
 
     <Controls:MetroWindow.Resources>
@@ -17,26 +17,27 @@
 
         <!-- TreeView -->
         <DataTemplate x:Key="Table">
-            <TextBlock Text="{Binding Name}">
+            <TextBlock Text="{Binding Name}" FontSize="11">
                 <TextBlock.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="Select Top 1000" Click="Select1000_Click"/>
+                        <MenuItem Header="Select Top 100" Click="Select100_Click"/>
                     </ContextMenu>
                 </TextBlock.ContextMenu>
             </TextBlock>
         </DataTemplate>
         <HierarchicalDataTemplate x:Key="Schema" ItemTemplate="{StaticResource Table}" ItemsSource="{Binding Tables}">
-            <TextBlock Text="{Binding Name}" />
+            <TextBlock Text="{Binding Name}" FontSize="11"/>
         </HierarchicalDataTemplate>
         <HierarchicalDataTemplate x:Key="MSSQL" ItemTemplate="{StaticResource Schema}" ItemsSource="{Binding Schemas}">
             <DockPanel ToolTip="{Binding IP}">
                 <Image DockPanel.Dock="Left" Source="/WPF;component/Image/server.png" Width="18"/>
-                <TextBlock DockPanel.Dock="Left" Text="{Binding IP}" VerticalAlignment="Center" Margin="5,0"/>
-                <Button DockPanel.Dock="Left" Style="{StaticResource ImageButton}" Margin="0,0,5,0"
+                <TextBlock DockPanel.Dock="Left" Text="{Binding Title}" VerticalAlignment="Center" Margin="5,0" 
+                           MaxWidth="120" FontWeight="Bold" FontStyle="Italic"/>
+                <Button DockPanel.Dock="Left" Style="{StaticResource ImageButton}" Margin="5,0"
                         Click="Edit_SQL_Click">
                     <Image Source="/WPF;component/Image/settings.png" Width="18"/>
                 </Button>
-                <Button DockPanel.Dock="Left" Style="{StaticResource ImageButton}" Margin="0,0,5,0"
+                <Button DockPanel.Dock="Left" Style="{StaticResource ImageButton}"
                         Click="Refresh_Click">
                     <Image Source="/WPF;component/Image/refresh.png" Width="18"/>
                 </Button>
@@ -52,7 +53,7 @@
     <DockPanel>
         <!-- ToolBar -->
         <DockPanel DockPanel.Dock="Top" Background="{StaticResource Panel_2}">
-            <Button DockPanel.Dock="Left" Margin="10,3,5,3" Style="{StaticResource ToolBar_Button}" 
+            <Button DockPanel.Dock="Left" Margin="15,3,5,3" Style="{StaticResource ToolBar_Button}" 
                     Height="25" Click="Add_TSQL_Click">
                 <DockPanel>
                     <Image Source="/WPF;component/Image/assignment_add.png" Width="18" />
@@ -78,9 +79,9 @@
             </Grid.ColumnDefinitions>
             <!-- 左邊 -->
             <DockPanel Grid.Column="0" Margin="3,3,0,3">
-                <DockPanel DockPanel.Dock="Top" Background="{StaticResource Panel_2}" Height="30">
-                    <Button DockPanel.Dock="Right" Style="{StaticResource ToolBar_Button}" Margin="0,0,5,0" 
-                            Height="25" Click="Add_SQL_Click">
+                <Grid DockPanel.Dock="Top" Background="{StaticResource Panel_2}" Height="30">
+                    <Button Style="{StaticResource ToolBar_Button}" Margin="0,0,5,0" 
+                            Height="25" Click="Add_SQL_Click" HorizontalAlignment="Right">
                         <DockPanel>
                             <Image Source="/WPF;component/Image/add.png" Width="18"/>
                             <TextBlock Text="新增" Margin="0,0,5,0"/>
@@ -89,7 +90,7 @@
                     <Grid>
                         <TextBlock Text="伺服器管理" HorizontalAlignment="Center" FontSize="14"/>
                     </Grid>
-                </DockPanel>
+                </Grid>
                 <DockPanel Background="{StaticResource Panel_2}">
                     <TreeView x:Name="tv_Server" Margin="1" Background="{StaticResource Gray}" 
                               ItemTemplate="{StaticResource MSSQL}" Style="{StaticResource MahApps.Styles.TreeView}"
@@ -106,11 +107,11 @@
             <!-- 右邊 -->
             <Grid Grid.Column="2" Margin="0,3,3,3">
                 <TabControl x:Name="tab_SQL" SelectedItem="{Binding SelectItem}">
+                    <!-- this is the header template-->
                     <TabControl.ItemTemplate>
-                        <!-- this is the header template-->
                         <DataTemplate>
                             <DockPanel>
-                                <TextBlock Text="{Binding Title}" />
+                                <TextBlock Text="{Binding Title}" MaxWidth="200"/>
                                 <Button Style="{StaticResource ImageButton}" Margin="5,0,0,0" 
                                 Click="Delete_TSQL_Click" ToolTip="{Binding UID}">
                                     <Image Source="/WPF;component/Image/delete.png" Width="15" />
@@ -119,8 +120,8 @@
                             </DockPanel>
                         </DataTemplate>
                     </TabControl.ItemTemplate>
+                    <!-- this is the body of the TabItem template-->
                     <TabControl.ContentTemplate>
-                        <!-- this is the body of the TabItem template-->
                         <DataTemplate>
                             <DockPanel>
                                 <DockPanel DockPanel.Dock="Bottom" Margin="5">
@@ -143,7 +144,8 @@
                                     </Grid>
                                     <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" Background="{DynamicResource Panel_2}"/>
                                     <Grid DockPanel.Dock="Bottom" Background="{StaticResource Panel_2}" Grid.Row="2">
-                                        <DataGrid ItemsSource="{Binding Data}" AutoGenerateColumns="True" IsReadOnly="True" Margin="5,0">
+                                        <DataGrid ItemsSource="{Binding Data}" AutoGenerateColumns="True" IsReadOnly="True"
+                                                  Margin="5,0" AutoGeneratingColumn="DataGrid_AutoGeneratingColumn">
                                         </DataGrid>
                                     </Grid>
                                 </Grid>

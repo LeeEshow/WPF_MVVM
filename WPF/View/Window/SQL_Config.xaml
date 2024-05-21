@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:Component="clr-namespace:Component.View.Controller;assembly=Component"
     mc:Ignorable="d"
-    Title="SQL Server 連線設定" Height="230" Width="300"
+    Title="SQL Server 連線設定" Height="270" Width="360"
     WindowTitleBrush="{StaticResource OuterFrame}" BorderBrush="{StaticResource FocusForm}"
     Background="{DynamicResource Panel_2}" WindowStartupLocation="CenterScreen">
     
@@ -24,6 +24,11 @@
     
     <DockPanel KeyDown="DockPanel_KeyDown">
         <DockPanel DockPanel.Dock="Top" Margin="0,10,0,0">
+            <TextBlock Text="Title" DockPanel.Dock="Left"/>
+            <TextBox Text="{Binding Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Left" />
+            <Grid/>
+        </DockPanel>
+        <DockPanel DockPanel.Dock="Top" Margin="0,5,0,0">
             <TextBlock Text="Server IP" DockPanel.Dock="Left"/>
             <TextBox Text="{Binding IP, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Left" />
             <Grid/>

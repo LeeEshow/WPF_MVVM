@@ -47,6 +47,17 @@ namespace WPF.ViewModel
     /// </summary>
     public class MSSQL : ViewModelBase
     {
+        public string Title
+        {
+            get => Title_;
+            set
+            {
+                Title_ = value;
+                OnPropertyChanged();
+            }
+        }
+        private string Title_;
+
         public string IP
         {
             get => IP_;
@@ -108,7 +119,7 @@ namespace WPF.ViewModel
                 using (var con = this.Connecting())
                 {
                     con.Open();
-                    string str = "SELECT * FROM sys.databases;";
+                    string str = "SELECT * FROM sys.databases where [name] not in ('master', 'model', 'msdb', 'tempdb');";
                     var cmd = new SqlCommand(str, con);
                     var DataReader = cmd.ExecuteReader();
                     while (DataReader.Read())

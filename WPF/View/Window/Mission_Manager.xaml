@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Title="任務管理器" Height="350" Width="550"
-    WindowTitleBrush="{StaticResource OuterFrame}" BorderBrush="{StaticResource FocusForm}"
+    WindowTitleBrush="{StaticResource OuterFrame}" BorderBrush="{StaticResource Panel_3}"
     Background="{DynamicResource Panel_1}" WindowStartupLocation="CenterScreen">
 
     <DockPanel>

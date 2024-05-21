@@ -9,7 +9,7 @@
     xmlns:Controller="clr-namespace:WPF.View.Controller"
     mc:Ignorable="d"
     Title="MQTT" Height="500" Width="700"
-    WindowTitleBrush="{StaticResource OuterFrame}" BorderBrush="{StaticResource FocusForm}"
+    WindowTitleBrush="{StaticResource OuterFrame}" BorderBrush="{StaticResource Panel_3}"
     Background="{DynamicResource Panel_1}" WindowStartupLocation="CenterScreen" Loaded="MetroWindow_Loaded" >
 
     <!--#region 視窗框 左邊內容 -->

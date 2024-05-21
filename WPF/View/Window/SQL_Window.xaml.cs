@@ -1,21 +1,11 @@
 ﻿using MahApps.Metro.Controls;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Data;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using WPF.View.Controller;
 using WPF.ViewModel;
 using Table = WPF.ViewModel.Table;
 
@@ -52,7 +42,7 @@ namespace WPF.View.Window
                     TSQL sql = new TSQL
                     {
                         Server = SelectServer,
-                        Title = SelectServer.IP + "-" + DateTime.Now.ToString("HHmmss"),
+                        Title = SelectServer.IP,
                         DateTime = DateTime.Now,
                         Execute_Results = "New Query"
                     };
@@ -64,7 +54,7 @@ namespace WPF.View.Window
                 }
                 else
                 {
-                    MessageBox.Show("選擇伺服器!!");
+                    MessageBox.Show("選擇伺服器!!", "", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
             }
             catch (Exception ex)
@@ -116,6 +106,12 @@ namespace WPF.View.Window
                 Execute_TSQL_Click(null, new RoutedEventArgs());
             }
         }
+
+        private void DataGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            string header = e.Column.Header.ToString();
+            e.Column.Header = header.Replace("_", "__");
+        }
         #endregion 執行
 
         #region 左邊 Treeview
@@ -159,7 +155,7 @@ namespace WPF.View.Window
             }
         }
 
-        private void Select1000_Click(object sender, RoutedEventArgs e)
+        private void Select100_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -168,10 +164,10 @@ namespace WPF.View.Window
                     TSQL sql = new TSQL
                     {
                         Server = SelectServer,
-                        Title = SelectServer.IP + "-" + DateTime.Now.ToString("HHmmss"),
+                        Title = SelectTable.Name,
                         DateTime = DateTime.Now,
                         Execute_Results = "New Query",
-                        T_SQL = $@"Select Top(1000) * From {SelectSchema.Name}.{SelectTable.Name};"
+                        T_SQL = $@"Select Top(100) * From {SelectSchema.Name}.{SelectTable.Name};"
                     };
 
                     WPF_MVVM.TSQLs.Add(sql);
@@ -279,5 +275,6 @@ namespace WPF.View.Window
             }
         }
         #endregion 連線編輯
+
     }
 }
