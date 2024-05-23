@@ -153,6 +153,7 @@
                                         <DataGrid ItemsSource="{Binding Data}" AutoGenerateColumns="True" IsReadOnly="True"
                                                   Margin="5,0" AutoGeneratingColumn="DataGrid_AutoGeneratingColumn">
                                         </DataGrid>
+                                        <Control Style="{StaticResource Loading}" Visibility="{Binding IsLoading}"/>
                                     </Grid>
                                 </Grid>
                             </DockPanel>

@@ -344,6 +344,20 @@ namespace WPF.ViewModel
             }
         }
         private string Execute_Results_;
+        /// <summary>
+        /// 
+        /// </summary>
+        [JsonIgnore]
+        public Visibility IsLoading
+        {
+            get => IsLoading_;
+            set
+            {
+                IsLoading_ = value;
+                OnPropertyChanged();
+            }
+        }
+        private Visibility IsLoading_ = Visibility.Collapsed;
         #endregion 屬性
 
         #region 行為
@@ -362,6 +376,8 @@ namespace WPF.ViewModel
             {
                 try
                 {
+                    IsLoading = Visibility.Visible;
+
                     Data = new DataView();
                     if (!string.IsNullOrEmpty(T_SQL) && Server != null)
                     {
@@ -402,6 +418,7 @@ namespace WPF.ViewModel
                 {
                     DateTime = DateTime.Now.Clone();
                     OnPropertyChanged("Data");
+                    IsLoading = Visibility.Collapsed;
                 }
             });
         }
