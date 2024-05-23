@@ -30,7 +30,14 @@
         </HierarchicalDataTemplate>
         <HierarchicalDataTemplate x:Key="MSSQL" ItemTemplate="{StaticResource Schema}" ItemsSource="{Binding Schemas}">
             <DockPanel ToolTip="{Binding IP}">
-                <Image DockPanel.Dock="Left" Source="/WPF;component/Image/server.png" Width="18"/>
+                <Ellipse Width="15" Height="15" StrokeThickness="1" Canvas.Left="135" Canvas.Top="100" HorizontalAlignment="Left" VerticalAlignment="Center" >
+                    <Ellipse.Fill>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="{Binding Signal}" Offset="1"/>
+                            <GradientStop Color="#FFC8C8C8" Offset="0.1"/>
+                        </LinearGradientBrush>
+                    </Ellipse.Fill>
+                </Ellipse>
                 <TextBlock DockPanel.Dock="Left" Text="{Binding Title}" VerticalAlignment="Center" Margin="5,0" 
                            MaxWidth="120" FontWeight="Bold" FontStyle="Italic"/>
                 <Button DockPanel.Dock="Left" Style="{StaticResource ImageButton}" Margin="5,0"
@@ -110,7 +117,7 @@
                     <!-- this is the header template-->
                     <TabControl.ItemTemplate>
                         <DataTemplate>
-                            <DockPanel>
+                            <DockPanel ToolTip="{Binding IP}">
                                 <TextBlock Text="{Binding Title}" MaxWidth="200"/>
                                 <Button Style="{StaticResource ImageButton}" Margin="5,0,0,0" 
                                 Click="Delete_TSQL_Click" ToolTip="{Binding UID}">
@@ -129,7 +136,6 @@
                                     <TextBlock DockPanel.Dock="Left" Text="{Binding DateTime}" Style="{StaticResource defTextBlock}" Foreground="{StaticResource Gray}"/>
                                     <TextBlock DockPanel.Dock="Left" Text="】" Style="{StaticResource defTextBlock}" Foreground="{StaticResource Gray}"/>
                                     <TextBlock DockPanel.Dock="Left" Text="{Binding Execute_Results}" Style="{StaticResource defTextBlock}" Margin="5,0,0,0"/>
-                                    <Component:sbi_DBConfig DockPanel.Dock="Right"/>
                                     <Grid />
                                 </DockPanel>
                                 <Grid Background="{StaticResource Panel_2}">

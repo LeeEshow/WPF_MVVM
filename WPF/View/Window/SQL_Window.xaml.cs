@@ -41,7 +41,7 @@ namespace WPF.View.Window
                 {
                     TSQL sql = new TSQL
                     {
-                        Server = SelectServer,
+                        Server_IP = SelectServer.IP,
                         Title = SelectServer.IP,
                         DateTime = DateTime.Now,
                         Execute_Results = "New Query"
@@ -163,7 +163,7 @@ namespace WPF.View.Window
                 {
                     TSQL sql = new TSQL
                     {
-                        Server = SelectServer,
+                        Server_IP = SelectServer.IP,
                         Title = SelectTable.Name,
                         DateTime = DateTime.Now,
                         Execute_Results = "New Query",

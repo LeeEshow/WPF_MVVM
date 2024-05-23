@@ -11,6 +11,7 @@ using API;
 using ToolBox.ExtensionMethods;
 using Newtonsoft.Json;
 using WPF.Properties;
+using System.Windows;
 
 namespace WPF.ViewModel
 {
@@ -34,7 +35,7 @@ namespace WPF.ViewModel
 
             foreach (var item in WPF_MVVM.TSQLs.ToList())
             {
-                if (!this.ToList().Select(x => x.IP).ToList().Contains(item.Server.IP))
+                if (!this.ToList().Select(x => x.IP).ToList().Contains(item.Server_IP))
                 {
                     WPF_MVVM.TSQLs.Remove(item);
                 }
@@ -47,6 +48,7 @@ namespace WPF.ViewModel
     /// </summary>
     public class MSSQL : ViewModelBase
     {
+        #region 屬性
         public string Title
         {
             get => Title_;
@@ -102,9 +104,23 @@ namespace WPF.ViewModel
         }
         private string def_Schema_;
 
+        [JsonIgnore]
+        public string Signal
+        {
+            get { return _Signal; }
+            set
+            {
+                _Signal = value;
+                OnPropertyChanged();
+            }
+        }
+        private string _Signal = "Black";
+
         public List<Schema> Schemas { get => Schemas_; }
         private List<Schema> Schemas_;
+        #endregion 屬性
 
+        #region 行為
         public SqlConnection Connecting()
         {
             Server.MSSQL.Setting(IP, User, Password, def_Schema);
@@ -131,16 +147,19 @@ namespace WPF.ViewModel
                     }
                 }
                 Schemas_.Sort((x, y) => x.Name.CompareTo(y.Name));
+                this.Signal = MVVM.Resources["Green"];
                 OnPropertyChanged("Schemas");
                 return Schemas;
             }
             catch (Exception ex)
             {
                 Schemas_ = new List<Schema>();
-                MVVM.ExceptionEvent(MethodBase.GetCurrentMethod(), ex);
+                this.Signal = MVVM.Resources["Red"];
                 return Schemas;
             }
         }
+        #endregion 行為
+    
     }
 
     /// <summary>
@@ -148,6 +167,7 @@ namespace WPF.ViewModel
     /// </summary>
     public class Schema : ViewModelBase
     {
+        #region 屬性
         public string Name
         {
             get => Name_;
@@ -162,7 +182,9 @@ namespace WPF.ViewModel
         public List<Table> Tables { get => Tables_; }
         private List<Table> Tables_;
         protected MSSQL MSSQL;
+        #endregion 屬性
 
+        #region 行為
         public Schema(MSSQL MSSQL)
         {
             this.MSSQL = MSSQL;
@@ -200,6 +222,7 @@ namespace WPF.ViewModel
                 return Tables;
             }
         }
+        #endregion 行為
     }
 
     /// <summary>
@@ -210,7 +233,6 @@ namespace WPF.ViewModel
         public string Name { get; set; }
     }
     #endregion MSSQL 連線
-
 
 
     #region SQL 語法操作物件
@@ -265,16 +287,17 @@ namespace WPF.ViewModel
         /// <summary>
         /// SQL Server 連線
         /// </summary>
-        public MSSQL Server
+        public string Server_IP
         {
-            get => Server_;
+            get => Server_IP_;
             set
             {
-                Server_ = value;
+                Server_IP_ = value;
                 OnPropertyChanged();
             }
         }
-        private MSSQL Server_;
+        private string Server_IP_;
+        private MSSQL Server => WPF_MVVM.MSSQLs.ToList().Find(x => x.IP == Server_IP);
         /// <summary>
         /// SQL 語法
         /// </summary>
@@ -333,45 +356,54 @@ namespace WPF.ViewModel
         /// 執行 SQL 語法
         /// </summary>
         /// <returns></returns>
-        public bool Execute()
+        public void Execute()
         {
-            try
+            _ = Task.Run(() =>
             {
-                Data = new DataView();
-                if (!string.IsNullOrEmpty(T_SQL) && Server != null)
+                try
                 {
-                    using (var con = Server.Connecting())
+                    Data = new DataView();
+                    if (!string.IsNullOrEmpty(T_SQL) && Server != null)
                     {
-                        con.Open();
-                        var cmd = new SqlCommand(T_SQL, con);
-                        var DataReader = cmd.ExecuteReader();
-                        using (DataTable dt = new DataTable())
+                        #region 執行 SQL
+                        using (var con = Server.Connecting())
                         {
-                            dt.Load(DataReader);
-                            Data = dt.DefaultView;
-                        }
-                        Execute_Results = $"Obtain {Data.Count} rows of data";
+                            con.Open();
+                            Server.Signal = MVVM.Resources["Green"];
 
-                        var Inserter = cmd.ExecuteNonQuery();
-                        if (Inserter > -1)
-                        {
-                            Execute_Results = $"Effected {Inserter} rows of data";
+                            var cmd = new SqlCommand(T_SQL, con);
+                            var DataReader = cmd.ExecuteReader();
+                            using (DataTable dt = new DataTable())
+                            {
+                                dt.Load(DataReader);
+                                Data = dt.DefaultView;
+                            }
+                            Execute_Results = $"Get {Data.Count} rows of data";
+
+                            var Inserter = cmd.ExecuteNonQuery();
+                            if (Inserter > -1)
+                            {
+                                Execute_Results = $"Effected {Inserter} rows of data";
+                            }
                         }
+                        #endregion 執行 SQL
+                    }
+                    else if (Server == null)
+                    {
+                        throw new Exception("找不到連線伺服器");
                     }
                 }
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Execute_Results = ex.Message;
-                MVVM.ExceptionEvent(MethodBase.GetCurrentMethod(), ex);
-                return false;
-            }
-            finally
-            {
-                DateTime = DateTime.Now.Clone();
-                OnPropertyChanged("Data");
-            }
+                catch (SqlException sex)
+                {
+                    Server.Signal = MVVM.Resources["Red"];
+                    Execute_Results = sex.Message;
+                }
+                finally
+                {
+                    DateTime = DateTime.Now.Clone();
+                    OnPropertyChanged("Data");
+                }
+            });
         }
         #endregion 行為
 
