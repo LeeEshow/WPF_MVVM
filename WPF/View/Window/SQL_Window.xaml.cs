@@ -244,10 +244,7 @@ namespace WPF.View.Window
                 Button btn = (Button)sender;
                 DockPanel dp = (DockPanel)btn.Parent;
                 var item = WPF_MVVM.MSSQLs.ToList().Find(x => x.IP == dp.ToolTip.ToString());
-                if (item != null)
-                {
-                    WPF_MVVM.MSSQLs.Remove(item);
-                }
+                WPF_MVVM.MSSQLs.Remove(item);
             }
             catch (Exception ex)
             {
@@ -262,12 +259,9 @@ namespace WPF.View.Window
                 Button btn = (Button)sender;
                 DockPanel dp = (DockPanel)btn.Parent;
                 var item = WPF_MVVM.MSSQLs.ToList().Find(x => x.IP == dp.ToolTip.ToString());
-                if (item != null)
-                {
-                    WPF_MVVM.MSSQLs.EditItem = item;
-                    SQL_Config config = new SQL_Config();
-                    config.ShowDialog();
-                }
+                WPF_MVVM.MSSQLs.EditItem = item;
+                SQL_Config config = new SQL_Config();
+                config.ShowDialog();
             }
             catch (Exception ex)
             {

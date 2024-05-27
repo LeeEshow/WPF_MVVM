@@ -159,7 +159,7 @@ namespace WPF.ViewModel
             }
         }
         #endregion 行為
-    
+
     }
 
     /// <summary>
@@ -409,10 +409,13 @@ namespace WPF.ViewModel
                         throw new Exception("找不到連線伺服器");
                     }
                 }
-                catch (SqlException sex)
+                catch (Exception ex)
                 {
-                    Server.Signal = MVVM.Resources["Red"];
-                    Execute_Results = sex.Message;
+                    if (ex is SqlException)
+                    {
+                        Server.Signal = MVVM.Resources["Red"];
+                    }
+                    Execute_Results = ex.Message;
                 }
                 finally
                 {

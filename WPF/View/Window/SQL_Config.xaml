@@ -17,7 +17,7 @@
             <Setter Property="TextAlignment" Value="Right" />
         </Style>
         <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource defTextBox}">
-            <Setter Property="Width" Value="150"/>
+            <Setter Property="Width" Value="180"/>
             <Setter Property="Margin" Value="5,0"/>
         </Style>
     </Controls:MetroWindow.Resources>
@@ -41,7 +41,7 @@
         <DockPanel DockPanel.Dock="Top" Margin="0,5,0,0">
             <TextBlock Text="Password" DockPanel.Dock="Left"/>
             <PasswordBox DockPanel.Dock="Left" Style="{StaticResource defPasswordBox}" 
-                         Width="150" Margin="5,0"
+                         Width="180" Margin="5,0"
                          Component:PasswordHelper.Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <Grid/>
         </DockPanel>
