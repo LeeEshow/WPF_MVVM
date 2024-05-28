@@ -67,8 +67,8 @@
                 <DockPanel DockPanel.Dock="Top" Margin="0,8">
                     <TextBlock DockPanel.Dock="Left" Text="自動連線" />
                     <CheckBox DockPanel.Dock="Left" Margin="10,0,0,0" IsChecked="{Binding AutoConnect}"  HorizontalAlignment="Left"/>
-                    <Button DockPanel.Dock="Left" Style="{StaticResource defButton}" Height="30" Width="80" 
-                            Margin="10,0,0,0" Click="Connect_Click" HorizontalAlignment="Left">
+                    <Button DockPanel.Dock="Left" Height="30" Width="80" Margin="10,0,0,0" 
+                            Click="Connect_Click" HorizontalAlignment="Left">
                         <Button.Content>
                             <DockPanel>
                                 <Image Source="{Binding Operate_Image}" Height="22" Margin="0,0,3,0"/>
@@ -84,7 +84,7 @@
                     <TextBox x:Name="txt_Subscribe" HorizontalAlignment="Stretch" Width="Auto" Margin="5,0,60,0"
                              KeyDown="txt_Subscribe_KeyDown"/>
                     <Button Content="訂閱" Width="50" HorizontalAlignment="Right" Height="25" Margin="0,0,5,0" 
-                            Style="{StaticResource defButton}" Click="Subscribe_Click" />
+                            Click="Subscribe_Click" />
                 </Grid>
                 <DataGrid x:Name="gd_Topic" AutoGenerateColumns="False" IsReadOnly="True"
                           SelectedItem="{Binding SelectItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
@@ -110,7 +110,7 @@
                         <DataGridTemplateColumn Header="" Width="100*" >
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Content="取消訂閱" Style="{StaticResource defButton}" Width="60" Height="25" Click="Unsubscribe_Click"/>
+                                    <Button Content="取消訂閱" Width="60" Height="25" Click="Unsubscribe_Click"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -145,7 +145,7 @@
                         <TextBlock Text="保留訊息" Width="Auto" HorizontalAlignment="Right"/>
                         <CheckBox Margin="5,0,10,0" IsChecked="{Binding RetainMessage}" HorizontalAlignment="Left" />
                     </DockPanel>
-                    <Button Content="發佈" Style="{StaticResource defButton}" Click="Publish_Click" 
+                    <Button Content="發佈" Click="Publish_Click" 
                             Margin="0,0,5,5" Height="Auto" />
                 </DockPanel>
                 <DockPanel>

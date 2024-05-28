@@ -19,7 +19,7 @@
             <TextBox x:Name="txt_Limit" DockPanel.Dock="Left" Text="{Binding Exception_Limit}" Height="22" Width="30" Margin="3,0" Style="{StaticResource defTextBox}"/>
             <TextBlock DockPanel.Dock="Left" Text="次異常即終止所有任務" VerticalAlignment="Center" Style="{StaticResource defTextBlock}"/>
             <Button DockPanel.Dock="Right" Content="新增任務" Height="30" Width="80" 
-                    Style="{StaticResource defButton}" Margin="10" Click="Add_Mission" />
+                    Margin="10,5" Click="Add_Mission" />
             <Grid />
         </DockPanel>
         
@@ -52,7 +52,7 @@
                     <DataGridTemplateColumn Header="Status">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Style="{StaticResource defButton}" Width="60" Click="Button_Click"  Margin="3,0">
+                                <Button Width="60" Click="Button_Click"  Margin="3,0">
                                     <Button.Content>
                                         <DockPanel>
                                             <Image Source="{Binding Operate_Image}" DockPanel.Dock="Left" Width="20"/>
@@ -74,8 +74,8 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <DockPanel>
-                                    <Button Content="移除" DockPanel.Dock="Left" Click="Delete_Mission" Style="{StaticResource defButton}" Width="50" Margin="3,0"/>
-                                    <Button Content="設定" DockPanel.Dock="Left" Click="Edit_Mission" Style="{StaticResource defButton}" Width="50" Margin="3,0"/>
+                                    <Button Content="移除" DockPanel.Dock="Left" Click="Delete_Mission" Width="50" Margin="3,0"/>
+                                    <Button Content="設定" DockPanel.Dock="Left" Click="Edit_Mission" Width="50" Margin="3,0"/>
                                     <Grid />
                                 </DockPanel>
                             </DataTemplate>

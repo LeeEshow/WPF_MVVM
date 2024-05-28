@@ -36,19 +36,21 @@
         <Grid Margin="3">
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.7*" />
-                <RowDefinition Height="3" />
+                <RowDefinition Height="4" />
                 <RowDefinition Height="0.3*" />
             </Grid.RowDefinitions>
-            <Grid DockPanel.Dock="Bottom" Background="{StaticResource Panel_2}" Grid.Row="2">
+            <Grid Background="{StaticResource Panel_2}" Grid.Row="2">
                 <Button x:Name="btn_test1" HorizontalAlignment="Right" VerticalAlignment="Top" Width="100" Height="30"
-                        Margin="0,10,20,0" Content="Test - 1" Style="{StaticResource defButton}" Click="btn_test1_Click"/>
+                        Margin="0,10,20,0" Content="Test - 1" Click="btn_test1_Click"/>
                 <Button x:Name="btn_test2" HorizontalAlignment="Right" VerticalAlignment="Top" Width="100" Height="30"
-                        Margin="0,50,20,0" Content="Test - 2" Style="{StaticResource defButton}" Click="btn_test2_Click"/>
-                <Control Style="{StaticResource Loading}" Visibility="Visible" HorizontalAlignment="Left" />
+                        Margin="0,50,20,0" Content="Test - 2" Click="btn_test2_Click"/>
             </Grid>
-            <GridSplitter Grid.Row="1" Height="3" HorizontalAlignment="Stretch" Background="{StaticResource Panel_1}"/>
+            <GridSplitter Grid.Row="1" Height="4" HorizontalAlignment="Stretch" 
+                          BorderBrush="{StaticResource Panel_1}" BorderThickness="0,1"
+                          Background="{StaticResource Panel_2}"/>
             <Grid Grid.Row="0">
                 <Component:pan_Message DockPanel.Dock="Top"/>
+                <Control x:Name="loading" Style="{StaticResource Loading}" Visibility="Collapsed" />
             </Grid>
         </Grid>
 

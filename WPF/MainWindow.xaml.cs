@@ -169,7 +169,14 @@ namespace WPF
         // ---------------------------------------------------------------------------------------
         private void btn_test1_Click(object sender, RoutedEventArgs e)
         {
-
+            if (loading.Visibility == Visibility.Collapsed)
+            {
+                loading.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                loading.Visibility = Visibility.Collapsed;
+            }
 
         }
 
