@@ -12,14 +12,37 @@ using ToolBox.ExtensionMethods;
 using Newtonsoft.Json;
 using WPF.Properties;
 using System.Windows;
+using System.Runtime.CompilerServices;
 
 namespace WPF.ViewModel
 {
     #region MSSQL 連線
-    public class MSSQL_List : BindingList<MSSQL>
+    public class MSSQL_List : BindingList<MSSQL>, INotifyPropertyChanged
     {
+        #region ViewModel 實作
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion ViewModel 實作
+
+        #region 屬性
         public MSSQL EditItem { get; set; }
 
+        public Visibility IsLoading
+        {
+            get => IsLoading_;
+            set
+            {
+                IsLoading_ = value;
+                OnPropertyChanged();
+            }
+        }
+        private Visibility IsLoading_ = Visibility.Collapsed;
+        #endregion 屬性
+
+        #region 行為
         public MSSQL_List()
         {
             foreach (var item in Settings.Default.MSSQL_List.ToObject<List<MSSQL>>())
@@ -41,6 +64,7 @@ namespace WPF.ViewModel
                 }
             }
         }
+        #endregion 行為
     }
 
     /// <summary>
@@ -194,33 +218,41 @@ namespace WPF.ViewModel
 
         public List<Table> GetTables()
         {
-            try
+            _ = Task.Run(() =>
             {
-                Tables_ = new List<Table>();
-                using (var con = MSSQL.Connecting())
+                try
                 {
-                    con.Open();
-                    string str = $@"select * from INFORMATION_SCHEMA.TABLES where TABLE_CATALOG = '{Name}';";
-                    var cmd = new SqlCommand(str, con);
-                    var DataReader = cmd.ExecuteReader();
-                    while (DataReader.Read())
+                    WPF_MVVM.MSSQLs.IsLoading = Visibility.Visible;
+
+                    Tables_ = new List<Table>();
+                    using (var con = MSSQL.Connecting())
                     {
-                        Tables_.Add(new Table
+                        con.Open();
+                        string str = $@"select * from INFORMATION_SCHEMA.TABLES where TABLE_CATALOG = '{Name}';";
+                        var cmd = new SqlCommand(str, con);
+                        var DataReader = cmd.ExecuteReader();
+                        while (DataReader.Read())
                         {
-                            Name = DataReader["TABLE_SCHEMA"].ToString() + "." + DataReader["TABLE_NAME"].ToString()
-                        });
+                            Tables_.Add(new Table
+                            {
+                                Name = DataReader["TABLE_SCHEMA"].ToString() + "." + DataReader["TABLE_NAME"].ToString()
+                            });
+                        }
                     }
+                    Tables_.Sort((x, y) => x.Name.CompareTo(y.Name));
+                    OnPropertyChanged("Tables");
                 }
-                Tables_.Sort((x, y) => x.Name.CompareTo(y.Name));
-                OnPropertyChanged("Tables");
-                return Tables;
-            }
-            catch (Exception ex)
-            {
-                Tables_ = new List<Table>();
-                MVVM.ExceptionEvent(MethodBase.GetCurrentMethod(), ex);
-                return Tables;
-            }
+                catch (Exception ex)
+                {
+                    Tables_ = new List<Table>();
+                    MVVM.ExceptionEvent(MethodBase.GetCurrentMethod(), ex);
+                }
+                finally
+                {
+                    WPF_MVVM.MSSQLs.IsLoading = Visibility.Collapsed;
+                }
+            });
+            return Tables;
         }
         #endregion 行為
     }

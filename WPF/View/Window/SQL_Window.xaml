@@ -60,7 +60,7 @@
     <DockPanel>
         <!-- ToolBar -->
         <DockPanel DockPanel.Dock="Top" Background="{StaticResource Panel_2}">
-            <Button DockPanel.Dock="Left" Margin="15,3,5,3" Style="{StaticResource ToolBar_Button}" 
+            <Button DockPanel.Dock="Left" Margin="10,3,5,3" Style="{StaticResource ToolBar_Button}" 
                     Height="25" Click="Add_TSQL_Click">
                 <DockPanel>
                     <Image Source="/WPF;component/Image/assignment_add.png" Width="18" />

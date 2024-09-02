@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Reflection;
 using API;
 using ToolBox.ExtensionMethods;
-using TestCode;
 using Component;
 using System.Linq;
 using Newtonsoft.Json;
@@ -56,7 +55,7 @@ namespace WPF
             // 把所有例外事件統一傳遞給 MVVM 處理
             Server.ServerException += MVVM.ExceptionEvent;
             ToolBox.Event.ToolException += MVVM.ExceptionEvent;
-            API.Base.APIException += MVVM.ExceptionEvent;
+            API.Model.APIException += MVVM.ExceptionEvent;
         }
         #endregion 初始化
 
@@ -123,6 +122,7 @@ namespace WPF
         #endregion 工具列設定
 
         // 程式開啟後所有要預先處理的事情都丟在這
+        // 白(火靈) > 貓() > 瀧(防禦) > 龍吟(日女) > 初音(蚌精) > 神樂
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
             try
@@ -182,9 +182,7 @@ namespace WPF
 
         private void btn_test2_Click(object sender, RoutedEventArgs e)
         {
-
-
+            Console.WriteLine(WPF_MVVM.MSSQLs.ToJsonString());
         }
-
     }
 }
