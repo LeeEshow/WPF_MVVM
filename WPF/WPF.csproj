@@ -77,8 +77,7 @@
     <Reference Include="API">
       <HintPath>..\..\API\API\bin\Debug\API.dll</HintPath>
     </Reference>
-    <Reference Include="Component, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Component">
       <HintPath>..\..\Component\Component\bin\Debug\Component.dll</HintPath>
     </Reference>
     <Reference Include="ControlzEx, Version=4.0.0.0, Culture=neutral, PublicKeyToken=69f1c32f803d307e, processorArchitecture=MSIL">
@@ -113,7 +112,7 @@
     </Reference>
     <Reference Include="ToolBox, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Tool\ToolBox\bin\Debug\ToolBox.dll</HintPath>
+      <HintPath>..\..\ToolBox\ToolBox\bin\Debug\ToolBox.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />

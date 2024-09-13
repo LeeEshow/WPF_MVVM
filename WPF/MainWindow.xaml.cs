@@ -53,7 +53,6 @@ namespace WPF
             // 事件宣告
             Settings.Default.PropertyChanged += Default_PropertyChanged;
             // 把所有例外事件統一傳遞給 MVVM 處理
-            Server.ServerException += MVVM.ExceptionEvent;
             ToolBox.Event.ToolException += MVVM.ExceptionEvent;
             API.Model.APIException += MVVM.ExceptionEvent;
         }
