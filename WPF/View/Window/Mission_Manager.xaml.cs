@@ -3,7 +3,6 @@ using System;
 using System.Reflection;
 using System.Windows;
 using WPF.ViewModel;
-using ToolBox.ExtensionMethods;
 using System.Runtime.InteropServices;
 
 namespace WPF.View.Window

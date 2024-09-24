@@ -9,7 +9,6 @@ using System.Threading;
 using System.Collections.Generic;
 using System.Reflection;
 using API;
-using ToolBox.ExtensionMethods;
 using Component;
 using System.Linq;
 using Newtonsoft.Json;
@@ -168,20 +167,14 @@ namespace WPF
         // ---------------------------------------------------------------------------------------
         private void btn_test1_Click(object sender, RoutedEventArgs e)
         {
-            if (loading.Visibility == Visibility.Collapsed)
-            {
-                loading.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                loading.Visibility = Visibility.Collapsed;
-            }
+            
 
         }
 
         private void btn_test2_Click(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine(WPF_MVVM.MSSQLs.ToJsonString());
+            
+            
         }
     }
 }

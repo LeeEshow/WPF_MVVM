@@ -6,7 +6,6 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using ToolBox.Common;
-using ToolBox.ExtensionMethods;
 using WPF.Properties;
 using Client = ToolBox.Common.MQTT.Client;
 using Newtonsoft.Json;

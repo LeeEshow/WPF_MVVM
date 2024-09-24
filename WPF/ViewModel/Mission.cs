@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using ToolBox.ExtensionMethods;
 using WPF.Properties;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
