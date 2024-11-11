@@ -167,14 +167,16 @@ namespace WPF
         // ---------------------------------------------------------------------------------------
         private void btn_test1_Click(object sender, RoutedEventArgs e)
         {
-            
+            // 
+
+
 
         }
 
         private void btn_test2_Click(object sender, RoutedEventArgs e)
         {
-            
-            
+
+
         }
     }
 }
